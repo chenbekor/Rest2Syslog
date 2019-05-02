@@ -1,4 +1,4 @@
-# rest-to-syslog
+# REST2Syslog
 REST2Syslog alllows collecting data from any REST API and send it to a configurable syslog destination.
 
 The initial implementation is based on syslog-ng but it can be easily enhanced to any syslog compatible collector. pull requests are more than welcomed!
