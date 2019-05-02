@@ -1,5 +1,5 @@
 import pickle
-import r2s_utils
+from r2s_utils import _print
 
 fp = None
 

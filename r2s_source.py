@@ -1,7 +1,7 @@
 from syslogng import LogSource
 import time
 from r2s_paginator import Paginator
-import r2s_parser
+from r2s_parser import *
 from r2s_state import State
 from r2s_utils import _print
 
@@ -14,7 +14,7 @@ class ProofpointSyslogSource(LogSource):
             self.paginator = Paginator(options)
             self.exit = False
             try:
-                self.state = _read_state()
+                self.state = State()
             except Exception as e:
                 _print(type(e).__name__)
                 _print('Error while trying to read Proofpoint Syslog State: '+ str(e))
@@ -39,7 +39,7 @@ class ProofpointSyslogSource(LogSource):
 
     def sendItems(self,items):
         for item in items:
-            if item['id'] != self.state.last_record_id
+            if item['id'] != self.state.last_record_id:
                 msg = buildMessage(item)
                 self.post_message(msg)
                 self.state.last_record_id = item['id']
@@ -50,7 +50,7 @@ class ProofpointSyslogSource(LogSource):
     def fetchPages(self):
         while not self.exit:
             page_items = self.paginator.fetchPage()
-            if page_items is not None && len(page_items) != 0:
+            if page_items is not None and len(page_items) != 0:
                 is_last_page = self.sendItems(page_items)
                 if is_last_page: break    
                 self.paginator.next()
