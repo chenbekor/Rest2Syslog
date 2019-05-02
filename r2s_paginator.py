@@ -70,8 +70,3 @@ class Paginator:
        
     def getLastRecordID(self):
         return self.state.last_record_id
-    
-    def setLastRecordId(self,last_record_id):
-        _print('storing new last record id:' + last_record_id)
-        self.state.last_record_id = last_record_id
-        self.state.persist()

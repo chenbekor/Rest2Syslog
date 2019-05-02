@@ -22,6 +22,7 @@ class State:
 
     def setLastRecordId(self,last_record_id):
         if(last_record_id != ''):
+            _print('storing new last record id:' + last_record_id)
             self.last_record_id = last_record_id
 
     def persist(self):
