@@ -5,7 +5,11 @@ from r2s_api_adaptor import APIAdaptor
 class Paginator:
     def __init__(self,options, api_adaptor = None, state = State()):
         self.page_num = 0
-        self.max_pages = int(options['max_pages'])
+        try:
+            self.max_pages = int(options['max_pages'])
+        except:
+            _print('could not read max_pages param from config options. please reffer to the R2S wiki for more information.')
+            raise
         self.state = state
         self.current_record_id = ''
         if api_adaptor is not None:
