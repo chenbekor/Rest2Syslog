@@ -7,7 +7,7 @@ def calculateSeverity(alert):
         return 1
     elif alert_severity_text == 'MID':
         return 5
-    elif alert_severity_text == 'HIGH'
+    elif alert_severity_text == 'HIGH':
         return 8
     elif alert_severity_text == 'CRITICAL':
         return 10
@@ -20,7 +20,7 @@ def buildMessage(alert):
     leef_attributes['cat'] = alert['sub_type']
     leef_attributes['devTime'] = str(alert['timestamp'])
     leef_attributes['devTimeFormat'] = 'Milliseconds'
-    leef_attributes['sev'] = str(self.calculateSeverity(alert))
+    leef_attributes['sev'] = str(calculateSeverity(alert))
     leef_attributes['alertID'] = alert['id']
     leef_attributes['description'] = alert['description'].replace('\n',' ')
     leef_attributes['title'] = alert['title']

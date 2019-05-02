@@ -10,7 +10,7 @@ def _get_file_handler():
     return fp
 
 class State:
-    def __init__(self, last_record_id):
+    def __init__(self):
         try:
             fp = _get_file_handler()
             state = pickle.load(fp)

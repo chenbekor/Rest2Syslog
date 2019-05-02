@@ -1,7 +1,7 @@
 from syslogng import LogSource
 import time
 from r2s_paginator import Paginator
-from r2s_parser import *
+from r2s_parser import buildMessage
 from r2s_state import State
 from r2s_utils import _print
 
@@ -13,12 +13,7 @@ class ProofpointSyslogSource(LogSource):
             self.interval = int(options['interval'])
             self.paginator = Paginator(options)
             self.exit = False
-            try:
-                self.state = State()
-            except Exception as e:
-                _print(type(e).__name__)
-                _print('Error while trying to read Proofpoint Syslog State: '+ str(e))
-                self.state = State('')
+            self.state = State()
             return True
         except:
             _print('configuration of Proofpoint Syslog Source (PSS) is incomplete or malformed. Please reffer to the PSS documentation for more details.')
