@@ -1,43 +1,31 @@
-import requests
 from r2s_utils import _print
+from r2s_state import State
+from r2s_api_adaptor import APIAdaptor
 
 class Paginator:
-    def __init__(self,options):
-        self.is_reached_last = False
+    def __init__(self,options, api_adaptor = None, state = State()):
         self.page_num = 0
-        self.auth_url = options['auth_url']
-        self.alerts_url = options['alerts_url']
-        self.auth_headers = {'x-api-key':options['api_key'], 'Authorization':''}
-        self.auth_body = {'client_id':options['client_id'],'client_secret':options['client_secret']}
-        self.auth_token = None
+        self.max_pages = int(options['max_pages'])
+        self.state = state
+        self.current_record_id = ''
+        if api_adaptor is not None:
+            self.api_adaptor = api_adaptor
+        else:
+            self.api_adaptor = APIAdaptor(options)
 
     def reset(self):
         self.page_num = 0
-        self.is_reached_last = False
 
     def getPage(self):
         return {'page':self.page_num}
 
     def next(self):
-        self.page_num += 1
-
-
-    def getAuthHeaders(self):
-        if self.auth_token is None:
-            self.refreshAuthToken()
-        return self.auth_headers
-
-    def refreshAuthToken(self):
-        _print("building auth request")
-        r = requests.post(self.auth_url,json=self.auth_body, headers=self.auth_headers)
-        _print("Auth request executed")
-        if r.status_code != 200 :
-            _print('Got non 200 response code: ' + str(r.status_code))
-            _print('Response body: ' + r.text)
-            r.raise_for_status()
-        self.auth_token = r.json()['auth_token']
-        _print('Access Token was refreshed successfully.')
-        self.auth_headers['Authorization'] = self.auth_token
+        if (self.page_num + 1) >= self.max_pages:
+            self.reset()
+            return False
+        else:
+            self.page_num += 1
+            return True
 
     def handlePageError(self,r):
         _print('Got non 200 response code')
@@ -48,14 +36,38 @@ class Paginator:
             _print('Error Response code: ' + str(r.status_code))
             _print('Error Response body: ' + r.text)
 
+    def filterRecords(self,records):
+        if records is None or len(records) == 0: return None
+        filtered_records = []
+        self.current_record_id = records[0]['id']
+        for record in records:
+            if record['id'] != self.state.last_record_id:
+                filtered_records.append(record)
+            else:
+                self.state.setLastRecordId(self.current_record_id)
+                break
+        if len(filtered_records) == 0:
+            return None
+        else:
+            return filtered_records
+
 
     def fetchPage(self):
-        headers = self.getAuthHeaders()
-        json = self.getPage()
-        r = requests.post(self.alerts_url,json = json, headers = headers)
-        _print('Fetch Page executed')
+        r = self.api_adaptor.executeRequest(self.getPage())
         if r.status_code != 200:
             self.handlePageError(r)
             return None
         else:
-            return r.json()['alerts']
+            try:
+                records = r.json()['alerts']
+            except:
+                records = None
+            return self.filterRecords(records)
+       
+    def getLastRecordID(self):
+        return self.state.last_record_id
+    
+    def setLastRecordId(self,last_record_id):
+        _print('storing new last record id:' + last_record_id)
+        self.state.last_record_id = last_record_id
+        self.state.persist()
