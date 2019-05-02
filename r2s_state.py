@@ -17,7 +17,7 @@ class State:
             self.last_record_id = state.last_record_id
         except Exception as e:
             _print(type(e).__name__)
-            _print('Error while trying to read Proofpoint Syslog State: '+ str(e))
+            _print('Error while trying to read REST2Syslog State: '+ str(e))
             self.last_record_id = ''
 
     def persist(self):
@@ -25,7 +25,7 @@ class State:
             fp = _get_file_handler()
             pickle.dump(self, fp)
         except Exception as e:
-            _print('Error while trying to store Proofpoint Syslog State: ' + str(e))
+            _print('Error while trying to store REST2Syslog State: ' + str(e))
 
 
 

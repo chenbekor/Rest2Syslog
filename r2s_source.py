@@ -1,26 +1,27 @@
 from syslogng import LogSource
 import time
 from r2s_paginator import Paginator
-from r2s_parser import buildMessage
+from r2s_parser import Parser
 from r2s_state import State
 from r2s_utils import _print
 
-class ProofpointSyslogSource(LogSource):
-
+class REST2SyslogSource(LogSource):
+    
     def init(self, options): # optional
-        _print("Proofpoint Syslog Source init")
+        _print("REST2Syslog Source init")
         try:
             self.interval = int(options['interval'])
             self.paginator = Paginator(options)
+            self.parser = Parser(options)
             self.exit = False
             self.state = State()
             return True
         except:
-            _print('configuration of Proofpoint Syslog Source (PSS) is incomplete or malformed. Please reffer to the PSS documentation for more details.')
+            _print('configuration of REST2Syslog Source (R2S) is incomplete or malformed. Please reffer to the R2S Wiki for more details.')
             return False
 
     def request_exit(self): # mandatory
-        _print("Proofpoint Syslog Source exit")
+        _print("R2S Source exit")
         self.exit = True
 
     def run(self): # mandatory
@@ -35,7 +36,7 @@ class ProofpointSyslogSource(LogSource):
     def sendItems(self,items):
         for item in items:
             if item['id'] != self.state.last_record_id:
-                msg = buildMessage(item)
+                msg = self.parser.buildMessage(item)
                 self.post_message(msg)
                 self.state.last_record_id = item['id']
             else:
