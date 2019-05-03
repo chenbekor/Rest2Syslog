@@ -24,12 +24,12 @@ class Paginator:
         return {'page':self.page_num}
 
     def next(self):
-        if (self.page_num + 1) >= self.max_pages:
-            self.reset()
-            return False
-        else:
+        if (self.page_num + 1) < self.max_pages:
             self.page_num += 1
             return True
+        else:
+            return False
+
 
     def handlePageError(self,r):
         _print('Got non 200 response code')

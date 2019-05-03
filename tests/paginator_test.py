@@ -1,11 +1,18 @@
 from r2s_paginator import Paginator
 from r2s_state import State
 
-options = {'max_pages':1}
+options = {'max_pages':10}
+options_two_page = {'max_pages':2}
+
 empty_page = []
 first_page = [{'id':'1'},{'id':'2'},{'id':'3'}]
 second_page = [{'id':'4'},{'id':'5'},{'id':'6'}]
+third_page = [{'id':'7'},{'id':'8'},{'id':'9'}]
+
+single_page = [first_page]
 two_pages = [first_page,second_page]
+three_pages = [first_page,second_page, third_page]
+
 class MockResponse:
     def __init__(self,status_code = 200, pages = empty_page):
         self.status_code = status_code
@@ -37,14 +44,22 @@ def test_empty_page():
     assert paginator.fetchPage() == None
 
 def test_single_page():
-    paginator = Paginator(options, api([first_page]))
+    paginator = Paginator(options, api(single_page))
     assert paginator.fetchPage() == first_page
+
+    paginator.next()
+    items = paginator.fetchPage()
+    assert items == None    
+
 
 def test_no_new_records():
     paginator = Paginator(options, api([first_page]), State(last_record_id='1'))
     assert paginator.fetchPage() == None
+    
+    paginator.next()
+    assert paginator.fetchPage() == None
 
-def test_1_item():
+def test_one_item():
     paginator = Paginator(options, api([first_page]), State(last_record_id='2'))
     assert paginator.fetchPage() == [{'id':'1'}]
 
@@ -80,3 +95,18 @@ def test_4_items():
     paginator.next()
     items = paginator.fetchPage()
     assert items == None
+
+def test_max_pages():
+    paginator = Paginator(options_two_page, api(three_pages), state = State(last_record_id='100'))
+    items = paginator.fetchPage()
+    assert items == first_page
+
+    is_available = paginator.next()
+    assert is_available == True
+
+    items = paginator.fetchPage()
+    assert items == second_page
+
+    is_available = paginator.next()
+    assert is_available == False
+
