@@ -1,21 +1,15 @@
 import pickle
 from r2s_utils import _print
 
-fp = None
-
-def _get_file_handler():
-    global fp
-    if fp is None:
-        fp = open('/tmp/pfpf-syslog-state.obj', 'wb+')
-    return fp
+DEFAULT_PERSIST_PATH = '/tmp/r2s-state.obj'
 
 class State:
-    def __init__(self, last_record_id = ''):
-        _print('init State')
+    def __init__(self, last_record_id = '', persit_path = DEFAULT_PERSIST_PATH):
+        self.persist_path = persit_path
         try:
-            fp = _get_file_handler()
-            state = pickle.load(fp)
-            self.last_record_id = state.last_record_id
+            with open(self.persist_path, 'rb') as f:
+                state = pickle.load(f)
+                self.last_record_id = state.last_record_id
         except Exception as e:
             _print('No REST2Syslog State. Creating a new instance.'+ str(e))
             self.last_record_id = last_record_id
@@ -28,8 +22,8 @@ class State:
 
     def persist(self):
         try:
-            fp = _get_file_handler()
-            pickle.dump(self, fp)
+            with open(self.persist_path, 'wb') as f:
+                pickle.dump(self, f)
         except Exception as e:
             _print('Error while trying to store REST2Syslog State: ' + str(e))
 

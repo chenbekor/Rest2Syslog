@@ -1,5 +1,6 @@
 from r2s_paginator import Paginator
-from r2s_state import State
+from r2s_state import State, DEFAULT_PERSIST_PATH
+import os
 
 options = {'max_pages':10}
 options_two_page = {'max_pages':2}
@@ -38,6 +39,11 @@ class MockAPIHandler:
     
 def api(pages = empty_page):
     return MockAPIHandler(pages)
+
+def setup_function(function):
+    try:
+        os.remove(DEFAULT_PERSIST_PATH)
+    except: pass
 
 def test_empty_page():
     paginator = Paginator(options, api())
