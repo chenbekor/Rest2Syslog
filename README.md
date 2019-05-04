@@ -1,10 +1,20 @@
-# REST2Syslog
+<h1 align="center">
+  <img src="https://repository-images.githubusercontent.com/184577526/72267a80-6eae-11e9-9cf3-5225a4d14677"/><br>
+  REST2Syslog
+</h1>
+
 REST2Syslog alllows collecting data from any REST API and send it to a configurable syslog destination.
 
-The initial implementation is based on syslog-ng but it can be enhanced to any syslog compatible collector. pull requests are more than welcomed!
-
-Also, the initial implementation is based on a specific need I had to integate with the Proofpoint CASB platform. Any other REST API can be added. Some refactor is required to support multiple SaaS platforms.
-
-The current implementation shows how to send the collected data to IBM QRadar (which supports syslog sources). It is possible to extend to any other syslog destination.
+The initial implementation is based on a specific need I had to integate with the Proofpoint CASB platform. Any other REST API can be added. Some refactor is required to support this.
 
 Feel free to submit pull requests or send and feedback/question.
+
+#Testing
+Code coverage (from the projects's root directory):
+```bash
+coverage run --source . --omit *_test*,*infra* -m pytest tests/
+```
+Code coverage reporting:
+```bash
+coverage report
+```
