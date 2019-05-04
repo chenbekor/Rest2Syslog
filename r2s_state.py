@@ -8,8 +8,8 @@ class State:
         self.persist_path = persit_path
         try:
             with open(self.persist_path, 'rb') as f:
-                state = pickle.load(f)
-                self.last_record_id = state.last_record_id
+                restored_state = pickle.load(f)
+                self.last_record_id = restored_state.last_record_id
         except Exception as e:
             _print('No REST2Syslog State. Creating a new instance.'+ str(e))
             self.last_record_id = last_record_id

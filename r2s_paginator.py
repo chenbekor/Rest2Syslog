@@ -4,21 +4,25 @@ from r2s_api_adaptor import APIAdaptor
 
 class Paginator:
     def __init__(self,options, api_adaptor = None, state = State()):
-        self.page_num = 0
+        self.state = state
+        self.reset()
         try:
             self.max_pages = int(options['max_pages'])
         except:
             _print('could not read max_pages param from config options. please reffer to the R2S wiki for more information.')
             raise
-        self.state = state
-        self.current_record_id = ''
         if api_adaptor is not None:
             self.api_adaptor = api_adaptor
         else:
             self.api_adaptor = APIAdaptor(options)
 
     def reset(self):
-        self.page_num = 0
+        try:
+            self.state.setLastRecordId(self.current_record_id)
+        except: pass
+        self.page_num = -1
+        self.current_record_id = ''
+        
 
     def getPage(self):
         return {'page':self.page_num}
@@ -43,7 +47,8 @@ class Paginator:
     def filterRecords(self,records):
         if records is None or len(records) == 0: return None
         filtered_records = []
-        self.current_record_id = records[0]['id']
+        if self.current_record_id == '':
+            self.current_record_id = records[0]['id']
         for record in records:
             if record['id'] != self.state.last_record_id:
                 filtered_records.append(record)
@@ -67,6 +72,3 @@ class Paginator:
             except:
                 records = None
             return self.filterRecords(records)
-       
-    def getLastRecordID(self):
-        return self.state.last_record_id
