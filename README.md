@@ -9,7 +9,7 @@ The initial implementation is based on a specific need I had to integate with th
 
 Feel free to submit pull requests or send and feedback/question.
 
-#Testing
+<h2>Testing</h2>
 Code coverage (from the projects's root directory):
 ```bash
 coverage run --source . --omit *_test*,*infra* -m pytest tests/
