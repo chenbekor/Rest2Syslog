@@ -1,5 +1,5 @@
 import os
-from r2s_state import DEFAULT_PERSIST_PATH
+from r2s.state import DEFAULT_PERSIST_PATH
 
 def teardown_function(function):
     try:

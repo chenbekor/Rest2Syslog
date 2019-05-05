@@ -1,20 +1,18 @@
 from syslogng import LogSource
+from syslogng import LogMessage
 import time
-from r2s_paginator import Paginator
-from r2s_parser import Parser
-from r2s_utils import _print
+from r2s.extensions.extension import Extension
+from r2s.utils import _print
 
 class REST2SyslogSource(LogSource):
 
-    def init(self, options, paginator = None): # optional
+    def init(self, options): # optional
         _print("REST2Syslog Source init")
         try:
             self.interval = int(options['interval'])
-            if paginator is None:    
-                self.paginator = Paginator(options)
-            else:
-                self.paginator = paginator
-            self.parser = Parser(options)
+            self.extensions = []
+            for extension_name in options['extensions'].split(','):
+                self.extensions.append(Extension(extension_name,options, self.sendItems))
             self.exit = False
             return True
         except:
@@ -28,22 +26,19 @@ class REST2SyslogSource(LogSource):
     def run(self): # mandatory
         while not self.exit:
             try:
-                time.sleep(5)
-                self.fetchPages()
+                time.sleep(self.interval)
+                self.doWork()
             except Exception as e:
                 _print('Error while trying to fetch alerts.')
                 _print(e)
 
     def sendItems(self,items):
         for item in items:            
-            msg = self.parser.buildMessage(item)
+            msg = LogMessage(item.buildMessage())
             self.post_message(msg)
 
-    def fetchPages(self):
-        while not self.exit and self.paginator.next():
-            page_items = self.paginator.fetchPage()
-            if page_items is not None:
-                self.sendItems(page_items)
-            else:
-                _print('No new items')
-                break
+    def doWork(self):
+        while not self.exit:
+            for extension in self.extensions:
+                extension.doWork()
+

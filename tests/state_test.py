@@ -1,64 +1,72 @@
-from r2s_state import State
-from r2s_paginator import Paginator
+from r2s.state import State
+from r2s.paginator import Paginator
 
 from infra.data import *
 from infra.api_mock import *
 from infra.utils import *
 
-
 def  test_persist():
-    state = State(last_record_id='4')
-    assert state.last_record_id == '4'
+    state = State(last_item_id='4')
+    state.persist() #store ro disk
 
-    state.last_record_id = '6'
-    state.persist()
+    restored_state = State() #loads from disk
+    assert restored_state.last_item_id == '4'
 
-    restored_state = State()
+    restored_state.setLastItemId('6') #also persist
 
-    assert restored_state.last_record_id == '6'
+    restored_second_state = State() #loads from disk
+
+    assert restored_second_state.last_item_id == '6'
+
+def test_persist_invalid_path():
+    state = State(last_item_id='4',persit_path='/invalid_path/mock.obj')
+    state.persist() #should persist to disk but fails due to bad path
+
+    restored_state = State() #loads from disk
+    assert restored_state.last_item_id == ''  #value lost - due to invalid persist path
 
 def test_state_based_pagination():
     state = State()
-    assert state.last_record_id == ''
+    assert state.last_item_id == ''
 
     mocker = api_mock([first_page])
     paginator = Paginator(options, mocker, state)
     
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == first_page
 
     mocker.setPages([second_page,first_page])
     paginator.reset()
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == second_page
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == None
     
     mocker.setPages([fourth_page, third_page, second_page,first_page])
     paginator.reset()
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == fourth_page
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == third_page
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == None
 
     mocker.setPages([fourth_page])
     paginator.reset()
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == None
 
 def test_pagination_after_service_restart():
@@ -67,9 +75,9 @@ def test_pagination_after_service_restart():
     paginator = Paginator(options, mocker, state)
     paginator.next()
     #fetch second page
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     #fetch first page
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     #persist
     paginator.reset()
 
@@ -79,13 +87,13 @@ def test_pagination_after_service_restart():
     paginator = Paginator(options, mocker, state)
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == fourth_page
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == third_page
 
     paginator.next()
-    items = paginator.fetchPage()
+    items = paginator.fetchPageItems()
     assert items == None    

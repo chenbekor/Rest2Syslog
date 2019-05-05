@@ -1,4 +1,4 @@
-from r2s_utils import _print
+from r2s.utils import _print
 import requests
 
 class APIAdaptor:
@@ -26,8 +26,8 @@ class APIAdaptor:
         _print('Access Token was refreshed successfully.')
         self.auth_headers['Authorization'] = self.auth_token
 
-    def executeRequest(self, page):
+    def fetchItems(self, body):
         headers = self.getAuthHeaders()
-        r = requests.post(self.alerts_url,json = page, headers = headers)
+        r = requests.post(self.alerts_url,json = body, headers = headers)
         _print('Fetch Page executed')
         return r

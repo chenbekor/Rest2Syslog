@@ -1,4 +1,4 @@
-from infra.data import *
+from infra.data import empty_page
 
 class MockResponse:
     def __init__(self,status_code = 200, pages = empty_page):
@@ -23,7 +23,7 @@ class MockAPIAdaptor:
     def setPages(self,pages):
         self.mock_response = MockResponse(pages = pages)
 
-    def executeRequest(self, page):
+    def fetchItems(self, page):
         return self.mock_response
     
 def api_mock(pages = empty_page):
