@@ -1,13 +1,13 @@
 <h1 align="center">
-  <img src="https://repository-images.githubusercontent.com/184577526/72267a80-6eae-11e9-9cf3-5225a4d14677"/><br>
+  <img src="https://repository-images.githubusercontent.com/184577526/f6114e80-6f10-11e9-9aac-498d91f82230"/><br>
   REST2Syslog
 </h1>
 
-REST2Syslog alllows collecting data from any REST API and send it to a configurable syslog destination.
+REST2Syslog collects data from any REST API and sends it over to any configurable syslog destination.
 
-The initial implementation is based on a specific need I had to integate with the Proofpoint CASB platform. Any other REST API can be added. Some refactor is required to support this.
+The initial implementation is based on a specific need I had to integate with the Proofpoint CASB platform. Any other REST API can be added. Some refactoring is required to support this (in the works).
 
-Feel free to submit pull requests or send and feedback/question.
+Feel free to submit pull requests or send any feedback/question.
 
 # Testing
 Code coverage (from the projects's root directory):
