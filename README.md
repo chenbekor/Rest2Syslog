@@ -27,6 +27,7 @@ Feel free to submit pull requests or send any feedback/question.
   <img src="https://github.com/chenbekor/Rest2Syslog/blob/master/wiki/images/R2S-Architecture.png"/>
 </h1>
 
+TBD - Explain the flow
 
 # Testing
 Code coverage (from the projects's root directory):
