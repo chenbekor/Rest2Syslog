@@ -9,13 +9,13 @@ The initial implementation is based on a specific need I had to integate with th
 
 Feel free to submit pull requests or send any feedback/question.
 
-* Deployment
-** Dependencies
+# Deployment
+## Dependencies
    - python3
    - [[https://realpython.com/python-requests/][requests]]
    - syslog-ng (>= 3.18)
 
-** Installation
+## Installation
    - Install syslog-ng (=> 3.18)
    - Copy the configuration file into etc
    - Copy the python scripts into sbin
