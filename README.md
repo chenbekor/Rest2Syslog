@@ -9,12 +9,30 @@ The initial implementation is based on a specific need I had to integate with th
 
 Feel free to submit pull requests or send any feedback/question.
 
+* Deployment
+** Dependencies
+   - python3
+   - [[https://realpython.com/python-requests/][requests]]
+   - syslog-ng (>= 3.18)
+
+** Installation
+   - Install syslog-ng (=> 3.18)
+   - Copy the configuration file into etc
+   - Copy the python scripts into sbin
+   - Alternatively you work from a git clone, but setting PYTHONPATH in the service file.
+   - Edit configuration (more details TBD)
+
+
 # Testing
 Code coverage (from the projects's root directory):
-```bash
+```sh
 coverage run --source . --omit *_test*,*infra* -m pytest tests/
 ```
 Code coverage reporting:
-```bash
+```sh
 coverage report
+```
+Code coverage html report:
+```sh
+coverage html
 ```
