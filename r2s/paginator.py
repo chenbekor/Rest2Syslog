@@ -3,7 +3,7 @@ from r2s.state import State
 from r2s.api_adaptor import APIAdaptor
 
 class Paginator:
-    def __init__(self,options, api_adaptor = None, state = State(), extension_name = 'extensions.proofpoint.pcasb'):
+    def __init__(self,options, api_adaptor = None, state = State(), extension_name = 'extension_name'):
         self.state = state
         self.extension_name = extension_name
         self.reset()

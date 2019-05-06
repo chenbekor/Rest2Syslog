@@ -1,6 +1,6 @@
 options = { 'max_pages':10,
-            'extensions.proofpoint.pcasb.formatter_module':'r2s.extensions.proofpoint.pcasb.alerts_formatter',
-            'extensions.proofpoint.pcasb.formatter_class':'PCASBAlertFormatter',
+            'extension_name.formatter_module':'r2s.extensions.proofpoint.pcasb.alerts_formatter',
+            'extension_name.formatter_class':'PCASBAlertFormatter',
             'company_name' :'mock_company',
             'product_name' : 'mock_product',
             'product_version':'1.0'
