@@ -11,7 +11,7 @@ Feel free to submit pull requests or send any feedback/question.
 # Deployment
 ## Dependencies
    - python3
-   - [requests](https://realpython.com/python-requests/)
+   - [requests](https://2.python-requests.org/en/master/)
    - syslog-ng (>= 3.18)
 
 ## Installation
