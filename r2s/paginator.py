@@ -9,7 +9,7 @@ class Paginator:
         self.reset()
         try:
             self.max_pages = int(options['max_pages'])
-            self.formatter = self.createFormatter(options)
+            self.formatter = self.loadFormatter(options)
         except Exception as ex:
             _print(ex)
             _print('could not initialize Paginator.')
@@ -19,12 +19,13 @@ class Paginator:
         else:
             self.api_adaptor = APIAdaptor(options)
 
-    def createFormatter(self,options):
+    def loadFormatter(self,options):
         formatter_module = options[self.extension_name + '.formatter_module']
         formatter_class_name = options[self.extension_name + '.formatter_class']
         module = __import__(formatter_module, fromlist =[formatter_class_name])
         formatter_class = getattr(module, formatter_class_name)
-        return formatter_class(options)
+        formatter_class.options = options
+        return formatter_class
 
     def reset(self):
         try:
@@ -57,12 +58,10 @@ class Paginator:
         if items is None or len(items) == 0: return None
         filtered_items = []
         if self.current_item_id == '':
-            self.current_item_id = items[0]['id']
+            self.current_item_id = items[0].getID()
         for item in items:
-            if item['id'] != self.state.last_item_id:
-                self.formatter.setItem(item)
-                formatted_msg = self.formatter.buildMessage()
-                filtered_items.append(formatted_msg)
+            if item.getID() != self.state.last_item_id:
+                filtered_items.append(item)
             else:
                 self.state.setLastItemId(self.current_item_id)
                 break
@@ -79,7 +78,8 @@ class Paginator:
             return None
         else:
             try:
-                items = r.json()['alerts']
-            except:
+                items = self.formatter.jsonToItemFormatters(r.json())
+            except Exception as ex:
+                _print(ex)
                 items = None
             return self.filterItems(items)

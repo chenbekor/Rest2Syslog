@@ -2,22 +2,32 @@ from r2s.utils import _print
 from r2s.extensions.abstract import R2SItemFormatter
 
 class PCASBAlertFormatter(R2SItemFormatter):
-    def __init__(self,options):
-        self.company_name = options['company_name']
-        self.product_name = options['product_name']
-        self.product_version = options['product_version']
-        super().__init__(options)
-
-    def setItem(self,item):
-        self.item = item         
+    def __init__(self, item):
+        self.company_name = self.options['company_name']
+        self.product_name = self.options['product_name']
+        self.product_version = self.options['product_version']
+        super().__init__(item)
+    
+    @staticmethod
+    def jsonToItemFormatters(json_obj):
+        alerts = json_obj['alerts']
+        formatters = []
+        for alert in alerts:
+            formatters.append(PCASBAlertFormatter(alert))
+        return formatters
 
     def buildHeader(self):
         return 'LEEF:1.0|' + self.company_name + '|' + self.product_name + '|' + self.product_version + '|' + self.item['type'] + '|'
     
     def buildBody(self, leef_attributes):
-        leef_body = ''
-        for (key,val) in leef_attributes.items(): leef_attributes += (key + '=' + val + '\t')
-        return leef_body
+        try:
+            leef_body = ''
+            for (key,val) in leef_attributes.items(): leef_body += (key + '=' + val + '\t')
+            return leef_body
+        except Exception as ex:
+            _print(ex)
+            return ''
+            
 
     def getCategory(self): 
         return self.item['sub_type']
@@ -44,7 +54,7 @@ class PCASBAlertFormatter(R2SItemFormatter):
         else:
             return '1'
     
-    def getInternalID(self):
+    def getID(self):
         return self.item['id']
     
     def getDescription(self):
@@ -100,7 +110,7 @@ class PCASBAlertFormatter(R2SItemFormatter):
         leef_attributes['usrName'] = self.getUserName()
         
         #extended LEEF Attributes
-        leef_attributes['alertID'] = self.getInternalID()
+        leef_attributes['alertID'] = self.getID()
         leef_attributes['description'] = self.getDescription()
         leef_attributes['title'] = self.getTitle()
         leef_attributes['cloudService'] = self.getCloudServiceName()

@@ -27,7 +27,8 @@ items = [item_1,item_2]
 sample_response_body = {"alerts":items}
 partial_item = {"id":"d04c8","timestamp":1557045242740,"severity":"MID","title":"Mock Title","description":"Mock Description","type":"Footprint","sub_type":"Suspicious Activity"}
 
-valid_msg = 'LEEF:1.0|mock_company|mock_product|1.0|Footprint|'
+valid_header = 'LEEF:1.0|mock_company|mock_product|1.0|Footprint|'
+valid_msg = 'LEEF:1.0|mock_company|mock_product|1.0|Footprint|cat=Suspicious Activity\tdevTime=1557045242740\tdevTimeFormat=Milliseconds\tsev=5\tusrName=USER_NAME_EXTRACT_FAIL\talertID=d04c8\tdescription=Mock Description\ttitle=Mock Title\tcloudService=CLOUD_SERVICE_EXTRACT_FAIL\talertClassification=CLASSIFICATION_EXTRACT_FAIL\talertSubClassification=SUB_CLASSIFICATION_EXTRACT_FAIL\tthreat=THREAT_EXTRACT_FAIL\t'
 
 single_page = [first_page]
 two_pages = [first_page,second_page]

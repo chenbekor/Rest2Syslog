@@ -33,40 +33,40 @@ def test_state_based_pagination():
     paginator = Paginator(options, mocker, state)
     
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == first_page
 
     mocker.setPages([second_page,first_page])
     paginator.reset()
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == second_page
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == None
     
     mocker.setPages([fourth_page, third_page, second_page,first_page])
     paginator.reset()
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == fourth_page
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == third_page
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == None
 
     mocker.setPages([fourth_page])
     paginator.reset()
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == None
 
 def test_pagination_after_service_restart():
@@ -75,9 +75,9 @@ def test_pagination_after_service_restart():
     paginator = Paginator(options, mocker, state)
     paginator.next()
     #fetch second page
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     #fetch first page
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     #persist
     paginator.reset()
 
@@ -87,13 +87,13 @@ def test_pagination_after_service_restart():
     paginator = Paginator(options, mocker, state)
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == fourth_page
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == third_page
 
     paginator.next()
-    items = paginator.fetchPageItems()
+    items = unwrap(paginator.fetchPageItems())
     assert items == None    
