@@ -1,6 +1,5 @@
 <h1 align="center">
-  <img src="https://repository-images.githubusercontent.com/184577526/f6114e80-6f10-11e9-9aac-498d91f82230"/><br>
-  REST2Syslog
+  <img src="https://repository-images.githubusercontent.com/184577526/6d042f80-7056-11e9-9b2b-8e90c0ab0f40"/>
 </h1>
 
 REST2Syslog collects data from any REST API and sends it over to any configurable syslog destination.
