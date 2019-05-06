@@ -23,7 +23,7 @@ class R2SItemFormatter(ABC):
         pass
     
     @staticmethod
-    def jsonToItemFormatters(json_obj):
+    def jsonToItems(json_obj):
         """Please implement in extension class: input is json. output is list of item formatters"""
         pass
 

@@ -78,7 +78,7 @@ class Paginator:
             return None
         else:
             try:
-                items = self.formatter.jsonToItemFormatters(r.json())
+                items = self.formatter.jsonToItems(r.json())
             except Exception as ex:
                 _print(ex)
                 items = None

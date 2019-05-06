@@ -9,7 +9,7 @@ class PCASBAlertFormatter(R2SItemFormatter):
         super().__init__(item)
     
     @staticmethod
-    def jsonToItemFormatters(json_obj):
+    def jsonToItems(json_obj):
         alerts = json_obj['alerts']
         formatters = []
         for alert in alerts:
