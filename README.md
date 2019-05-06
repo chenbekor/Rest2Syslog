@@ -21,6 +21,12 @@ Feel free to submit pull requests or send any feedback/question.
    - Alternatively you work from a git clone, but setting PYTHONPATH in the service file.
    - Edit configuration (more details TBD)
 
+## Architecture
+
+<h1 align="center">
+  <img src="https://github.com/chenbekor/Rest2Syslog/blob/master/wiki/images/R2S-Architecture.png"/>
+</h1>
+
 
 # Testing
 Code coverage (from the projects's root directory):
