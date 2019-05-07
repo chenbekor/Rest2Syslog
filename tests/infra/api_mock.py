@@ -14,7 +14,7 @@ class MockResponse:
         else:
             page = empty_page
 
-        return {'alerts':page}
+        return page
 
 class MockAPIAdaptor:
     def __init__(self,pages):

@@ -1,13 +1,15 @@
 from r2s.utils import _print
 import requests
+from r2s.extensions.abstract import R2SAPIAdaptor
 
-class APIAdaptor:
+class PCASBAlertsAPIAdaptor(R2SAPIAdaptor):
     def __init__(self,options):
         self.auth_url = options['auth_url']
         self.alerts_url = options['alerts_url']
         self.auth_headers = {'x-api-key':options['api_key'], 'Authorization':''}
         self.auth_body = {'client_id':options['client_id'],'client_secret':options['client_secret']}
         self.auth_token = None
+        super().__init__()
 
     def getAuthHeaders(self):
         if self.auth_token is None:
@@ -47,4 +49,4 @@ class APIAdaptor:
             self.handleResponseError(response)
             return None
         else:
-            return response.json()
+            return response.json()['alerts']

@@ -1,6 +1,5 @@
 from r2s.paginator import Paginator
 from r2s.state import State, DEFAULT_PERSIST_PATH
-from r2s.api_adaptor import APIAdaptor
 from infra.data import *
 from infra.api_mock import * 
 from infra.utils import *
@@ -95,14 +94,14 @@ def test_no_api_adaptor():
     paginator = Paginator(options = {**options,**options_api}, api_adaptor = None)
     assert paginator.api_adaptor is not None
 
-@patch('r2s.api_adaptor.APIAdaptor')
+@patch('r2s.extensions.proofpoint.pcasb.alerts_api_adaptor.PCASBAlertsAPIAdaptor')
 def test_auth_expires(api_mock):
     api_mock.fetchItems.return_value.status_code = 401
     paginator = Paginator(options = {**options,**options_api}, api_adaptor= api_mock)
     items = paginator.fetchPageItems()
     assert items == None
 
-@patch('r2s.api_adaptor.APIAdaptor')
+@patch('r2s.extensions.proofpoint.pcasb.alerts_api_adaptor.PCASBAlertsAPIAdaptor')
 def test_bad_fetch_response(api_mock):
     api_mock.fetchItems.return_value.status_code = 500
     paginator = Paginator(options = {**options,**options_api}, api_adaptor= api_mock)
@@ -110,7 +109,7 @@ def test_bad_fetch_response(api_mock):
     items = paginator.fetchPageItems()
     assert items == None
 
-@patch('r2s.api_adaptor.APIAdaptor')
+@patch('r2s.extensions.proofpoint.pcasb.alerts_api_adaptor.PCASBAlertsAPIAdaptor')
 def test_mallformed_response(api_mock):
     api_mock.fetchItems.return_value.status_code = 200
     api_mock.fetchItems.return_value.json.return_value = {'invalid':'boom!'}

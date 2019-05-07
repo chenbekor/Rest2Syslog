@@ -1,7 +1,7 @@
 from r2s.utils import _print
 from r2s.extensions.abstract import R2SItemFormatter
 
-class PCASBAlertFormatter(R2SItemFormatter):
+class PCASBAlertsFormatter(R2SItemFormatter):
     def __init__(self, item):
         self.company_name = self.options['company_name']
         self.product_name = self.options['product_name']
@@ -9,11 +9,10 @@ class PCASBAlertFormatter(R2SItemFormatter):
         super().__init__(item)
     
     @staticmethod
-    def jsonToItems(json_obj):
-        alerts = json_obj['alerts']
+    def wrapItems(items_as_json_array):
         formatters = []
-        for alert in alerts:
-            formatters.append(PCASBAlertFormatter(alert))
+        for item in items_as_json_array:
+            formatters.append(PCASBAlertsFormatter(item))
         return formatters
 
     def buildHeader(self):
