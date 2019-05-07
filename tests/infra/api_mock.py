@@ -1,4 +1,4 @@
-from infra.data import empty_page
+from tests.infra.data import empty_page
 
 class MockResponse:
     def __init__(self,status_code = 200, pages = empty_page):
