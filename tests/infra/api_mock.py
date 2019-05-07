@@ -24,7 +24,7 @@ class MockAPIAdaptor:
         self.mock_response = MockResponse(pages = pages)
 
     def fetchItems(self, page):
-        return self.mock_response
+        return self.mock_response.json()
     
 def api_mock(pages = empty_page):
     return MockAPIAdaptor(pages)

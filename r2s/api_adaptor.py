@@ -26,8 +26,25 @@ class APIAdaptor:
         _print('Access Token was refreshed successfully.')
         self.auth_headers['Authorization'] = self.auth_token
 
-    def fetchItems(self, body):
+    def buildRequestBody(self, page_num):
+        return {'page':page_num}
+
+    def handleResponseError(self,response):
+        _print('Got non 200 response code')
+        if response.status_code == 401:
+            _print('The Auth Token was probably expired.')
+            self.auth_token = None
+        else:
+            _print('Error Response code: ' + str(response.status_code))
+            _print('Error Response body: ' + response.text)
+
+    def fetchItems(self, page_num):
         headers = self.getAuthHeaders()
-        r = requests.post(self.alerts_url,json = body, headers = headers)
-        _print('Fetch Page executed')
-        return r
+        request_body = self.buildRequestBody(page_num)
+        response = requests.post(self.alerts_url,json = request_body, headers = headers)
+        _print('Fetch Page ' + str(page_num) + 'executed')
+        if response.status_code != 200:
+            self.handleResponseError(response)
+            return None
+        else:
+            return response.json()

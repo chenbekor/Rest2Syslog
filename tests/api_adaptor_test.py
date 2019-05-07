@@ -38,7 +38,7 @@ def test_fetch_items(mock_post):
     with patch.object(APIAdaptor, 'getAuthHeaders', return_value = 'mock_token') as mock_method:
         adaptor = APIAdaptor(options_api)
         response = adaptor.fetchItems('')
-        assert response.json() == sample_response_body
+        assert response == sample_response_body
 
 
 

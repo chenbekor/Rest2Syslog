@@ -34,25 +34,12 @@ class Paginator:
         self.page_num = -1
         self.current_item_id = ''
 
-    def getPage(self):
-        return {'page':self.page_num}
-
     def next(self):
         if (self.page_num + 1) < self.max_pages:
             self.page_num += 1
             return True
         else:
             return False
-
-
-    def handlePageError(self,r):
-        _print('Got non 200 response code')
-        if r.status_code == 401:
-            _print('The Auth Token was probably expired.')
-            self.auth_token = None
-        else:
-            _print('Error Response code: ' + str(r.status_code))
-            _print('Error Response body: ' + r.text)
 
     def filterItems(self,items):
         if items is None or len(items) == 0: return None
@@ -70,16 +57,11 @@ class Paginator:
         else:
             return filtered_items
 
-
     def fetchPageItems(self):
-        r = self.api_adaptor.fetchItems(self.getPage())
-        if r.status_code != 200:
-            self.handlePageError(r)
-            return None
-        else:
-            try:
-                items = self.formatter.jsonToItems(r.json())
-            except Exception as ex:
-                _print(ex)
-                items = None
-            return self.filterItems(items)
+        response_json = self.api_adaptor.fetchItems(self.page_num) 
+        try:
+            items = self.formatter.jsonToItems(response_json)
+        except Exception as ex:
+            _print(ex)
+            items = None
+        return self.filterItems(items)

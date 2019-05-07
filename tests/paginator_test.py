@@ -101,7 +101,6 @@ def test_auth_expires(api_mock):
     paginator = Paginator(options = {**options,**options_api}, api_adaptor= api_mock)
     items = paginator.fetchPageItems()
     assert items == None
-    assert paginator.auth_token == None
 
 @patch('r2s.api_adaptor.APIAdaptor')
 def test_bad_fetch_response(api_mock):
