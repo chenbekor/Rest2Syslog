@@ -46,7 +46,7 @@ class Paginator:
         self.current_item_id = ''
 
     def next(self):
-        if (self.page_num + 1) < self.max_pages:
+        if self.max_pages >= 0 and (self.max_pages == 0 or (self.page_num + 1) <= self.max_pages):
             self.page_num += 1
             return True
         else:
