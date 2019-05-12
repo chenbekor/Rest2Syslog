@@ -6,7 +6,10 @@ class R2SAPIAdaptor(ABC):
     
     @abstractmethod
     def fetchItems(self, page_num):
-        """Implement a call to a specific API to fetch items (single page)"""
+        """Implement a call to a specific API to fetch items (single page)
+        Return value should be a touple of: isFull, response_json where:
+        is
+        """
         pass
 
 class R2SItemFormatter(ABC):

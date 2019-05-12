@@ -10,6 +10,8 @@ options = { 'max_pages':10,
 
 options_two_page = {'max_pages':2}
 
+options_negative_max_page = {'max_pages':-2}
+
 options_api = { 'auth_url':'mock_auth_url',
                 'alerts_url':'mock_items_url',
                 'api_key':'mock_key',

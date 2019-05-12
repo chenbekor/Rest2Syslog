@@ -30,7 +30,7 @@ def test_state_based_pagination():
     assert state.last_item_id == ''
 
     mocker = api_mock([first_page])
-    paginator = Paginator(options, mocker, state)
+    paginator = Paginator(options = options, api_adaptor= mocker, state = state)
     
     paginator.next()
     items = unwrap(paginator.fetchPageItems())
@@ -70,9 +70,8 @@ def test_state_based_pagination():
     assert items == None
 
 def test_pagination_after_service_restart():
-    state = State()
     mocker = api_mock([second_page,first_page])
-    paginator = Paginator(options, mocker, state)
+    paginator = Paginator(options = options, api_adaptor= mocker)
     paginator.next()
     #fetch second page
     items = unwrap(paginator.fetchPageItems())
@@ -81,18 +80,17 @@ def test_pagination_after_service_restart():
     #persist
     paginator.reset()
 
-    #restart opertion
-    state = State()
-    mocker = api_mock([fourth_page, third_page, second_page,first_page])
-    paginator = Paginator(options, mocker, state)
+    #restart opertion => new paginator
+    mocker = api_mock([third_page + second_page,first_page])
+    paginator = Paginator(options = options, api_adaptor = mocker)
 
     paginator.next()
     items = unwrap(paginator.fetchPageItems())
-    assert items == fourth_page
+    assert items == third_page  #only new items from page three should appear
 
     paginator.next()
     items = unwrap(paginator.fetchPageItems())
-    assert items == third_page
+    assert items == None
 
     paginator.next()
     items = unwrap(paginator.fetchPageItems())

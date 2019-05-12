@@ -8,12 +8,12 @@ from unittest.mock import Mock, patch
 import pytest
 
 def test_empty_page():
-    paginator = Paginator(options, api_mock())
+    paginator = Paginator(options = options, api_adaptor= api_mock())
     paginator.next()
     assert unwrap(paginator.fetchPageItems()) == None
 
 def test_single_page():
-    paginator = Paginator(options, api_mock(single_page))
+    paginator = Paginator(options = options, api_adaptor = api_mock(single_page))
     paginator.next()
     assert unwrap(paginator.fetchPageItems()) == first_page
 
@@ -23,7 +23,7 @@ def test_single_page():
 
 
 def test_no_new_items():
-    paginator = Paginator(options, api_mock([first_page]), State(last_item_id='1'))
+    paginator = Paginator(options = options, api_adaptor = api_mock([first_page]), state = State(last_item_id='1'))
     paginator.next()
     assert unwrap(paginator.fetchPageItems()) == None
     
@@ -31,7 +31,7 @@ def test_no_new_items():
     assert unwrap(paginator.fetchPageItems()) == None
 
 def test_one_item():
-    paginator = Paginator(options, api_mock([first_page]), State(last_item_id='2'))
+    paginator = Paginator(options = options, api_adaptor = api_mock([first_page]), state = State(last_item_id='2'))
     paginator.next()
     assert unwrap(paginator.fetchPageItems()) == [{'id':'1'}]
 
@@ -41,7 +41,7 @@ def test_one_item():
 
 
 def test_two_pages():
-    paginator = Paginator(options, api_mock(two_pages))
+    paginator = Paginator(options = options, api_adaptor = api_mock(two_pages))
     
     paginator.next()
     items = unwrap(paginator.fetchPageItems())
@@ -56,7 +56,7 @@ def test_two_pages():
     assert items == None    
 
 def test_4_items():
-    paginator = Paginator(options, api_mock(two_pages), state = State(last_item_id='5'))
+    paginator = Paginator(options = options, api_adaptor= api_mock(two_pages), state = State(last_item_id='5'))
     
     paginator.next()
     items = unwrap(paginator.fetchPageItems())
@@ -70,8 +70,15 @@ def test_4_items():
     items = unwrap(paginator.fetchPageItems())
     assert items == None
 
+
+def test_negative_max_pages():
+    paginator = Paginator(options = {**options,**options_negative_max_page}, api_adaptor= api_mock(two_pages), state = State(last_item_id='5'))
+    
+    is_available = paginator.next()
+    assert is_available == False
+
 def test_max_pages():
-    paginator = Paginator({**options,**options_two_page}, api_mock(three_pages), state = State(last_item_id='100'))
+    paginator = Paginator(options = {**options,**options_two_page}, api_adaptor= api_mock(three_pages), state = State(last_item_id='100'))
     
     paginator.next()
     items = unwrap(paginator.fetchPageItems())

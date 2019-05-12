@@ -2,9 +2,12 @@ from r2s.utils import _print
 from r2s.state import State
 
 class Paginator:
-    def __init__(self,options, api_adaptor = None, state = State(), extension_name = 'extension_name'):
+    def __init__(self,options, state = None, api_adaptor = None, extension_name = 'extension_name'):
         _print('init: Paginator')
-        self.state = state
+        if(state is None):
+            self.state = State()
+        else:
+            self.state = state
         self.extension_name = extension_name
         self.reset()
         try:
@@ -44,9 +47,15 @@ class Paginator:
         except: pass
         self.page_num = -1
         self.current_item_id = ''
+        self.is_end = False
+    
+    def isNextAvailable(self):
+        is_not_maxed = self.max_pages >= 0 and (self.max_pages == 0 or (self.page_num + 1) < self.max_pages)
+        is_not_reached_end = not self.is_end
+        return  is_not_reached_end and is_not_maxed
 
     def next(self):
-        if self.max_pages >= 0 and (self.max_pages == 0 or (self.page_num + 1) <= self.max_pages):
+        if self.isNextAvailable():
             self.page_num += 1
             return True
         else:
@@ -63,6 +72,7 @@ class Paginator:
             else:
                 _print('Current Record ID: ' + item.getID() + ' matched last record id from state: ' + self.state.last_item_id )
                 self.state.setLastItemId(self.current_item_id)
+                self.is_end = True
                 break
         if len(filtered_items) == 0:
             return None
@@ -70,6 +80,8 @@ class Paginator:
             return filtered_items
 
     def fetchPageItems(self):
+        if self.is_end: return None
+
         response_json = self.api_adaptor.fetchItems(self.page_num) 
         try:
             items = self.formatter.wrapItems(response_json)
