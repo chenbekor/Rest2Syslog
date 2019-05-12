@@ -90,5 +90,5 @@ class Paginator:
                 _print(ex)
                 items = None
             return self.filterItems(items)
-        else
+        else:
             return None
