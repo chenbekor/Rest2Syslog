@@ -13,7 +13,7 @@ class REST2SyslogSource(LogSource):
             self.extensions = []
             for extension_name in options['extensions'].split(','):
                 _print('found extension: ' + extension_name)
-                self.extensions.append(Extension(extension_name,options, self.sendItems))
+                self.extensions.append(Extension(name = extension_name,options = options, send_items_func = self.sendItems))
             self.exit = False
             return True
         except:
