@@ -43,10 +43,15 @@ class PCASBAlertsAPIAdaptor(R2SAPIAdaptor):
     def fetchItems(self, page_num):
         headers = self.getAuthHeaders()
         request_body = self.buildRequestBody(page_num)
-        response = requests.post(self.alerts_url,json = request_body, headers = headers)
-        _print('Fetch Page ' + str(page_num) + ' executed')
-        if response.status_code != 200:
-            self.handleResponseError(response)
+        try:
+            response = requests.post(self.alerts_url,json = request_body, headers = headers)
+            _print('Fetch Page ' + str(page_num) + ' executed')
+            if response.status_code != 200:
+                self.handleResponseError(response)
+                return None
+            else:
+                return response.json()['alerts']
+        except Exception as ex:
+            _print('Error while trying to fetch items.')
+            _print(ex)
             return None
-        else:
-            return response.json()['alerts']

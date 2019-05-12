@@ -3,6 +3,7 @@ from unittest.mock import Mock, patch
 import pytest
 from infra.data import options_api, items, sample_response_body
 from requests import HTTPError
+from urllib3.exceptions import NewConnectionError
 
 @patch('requests.post')
 def test_auth(mock_post):
@@ -39,6 +40,15 @@ def test_fetch_items(mock_post):
         adaptor = PCASBAlertsAPIAdaptor(options_api)
         response = adaptor.fetchItems(0)
         assert response == items
+
+@patch('requests.post')
+def test_fetch_items_exception(mock_post):
+    mock_post.side_effect = Exception('mock connection error')
+
+    with patch.object(PCASBAlertsAPIAdaptor, 'getAuthHeaders', return_value = 'mock_token') as mock_method:
+        adaptor = PCASBAlertsAPIAdaptor(options_api)
+        response = adaptor.fetchItems(0)
+        assert response == None
 
 
 

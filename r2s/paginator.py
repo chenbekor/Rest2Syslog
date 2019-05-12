@@ -83,9 +83,12 @@ class Paginator:
         if self.is_end: return None
 
         response_json = self.api_adaptor.fetchItems(self.page_num) 
-        try:
-            items = self.formatter.wrapItems(response_json)
-        except Exception as ex:
-            _print(ex)
-            items = None
-        return self.filterItems(items)
+        if response_json is not None:
+            try:
+                items = self.formatter.wrapItems(response_json)
+            except Exception as ex:
+                _print(ex)
+                items = None
+            return self.filterItems(items)
+        else
+            return None
