@@ -85,14 +85,14 @@ class PCASBAlertsFormatter(R2SItemFormatter):
     
     def getSubClassification(self):
         try:
-            return item['related_events'][0]['event_classification']['sub_category']
+            return self.item['related_events'][0]['event_classification']['sub_category']
         except:
             _print("could not extract the related event's sub category from item " + self.item['id'])
             return 'SUB_CLASSIFICATION_EXTRACT_FAIL'
 
     def getThreat(self):
         try:
-            return item['related_events'][0]['event_classification']['threat']
+            return self.item['related_events'][0]['event_classification']['threat']
         except:
             _print("could not extract the related event's threat from item " + self.item['id'])
             return 'THREAT_EXTRACT_FAIL'
