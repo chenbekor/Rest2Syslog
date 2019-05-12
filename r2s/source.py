@@ -42,4 +42,5 @@ class REST2SyslogSource(LogSource):
         while not self.exit:
             for extension in self.extensions:
                 extension.doWork()
+            break
 
