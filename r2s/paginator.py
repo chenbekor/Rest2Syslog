@@ -3,11 +3,13 @@ from r2s.state import State
 
 class Paginator:
     def __init__(self,options, api_adaptor = None, state = State(), extension_name = 'extension_name'):
+        _print('init: Paginator')
         self.state = state
         self.extension_name = extension_name
         self.reset()
         try:
             self.max_pages = int(options['max_pages'])
+            _print('about to load formatters')
             self.formatter = self.loadFormatter(options)
         except Exception as ex:
             _print(ex)
@@ -22,6 +24,8 @@ class Paginator:
     def loadClass(self,options,type_name):
         module_name = options[self.extension_name + '.' + type_name + '_module']
         class_name = options[self.extension_name + '.' + type_name + '_class']
+        _print('about to load from module:' + module_name)
+        _print('about to load class:' + class_name)
         module = __import__(module_name, fromlist =[class_name])
         _class = getattr(module, class_name)
         return _class

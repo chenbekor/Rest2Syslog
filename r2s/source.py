@@ -12,6 +12,7 @@ class REST2SyslogSource(LogSource):
             self.interval = int(options['interval'])
             self.extensions = []
             for extension_name in options['extensions'].split(','):
+                _print('found extension: ' + extension_name)
                 self.extensions.append(Extension(extension_name,options, self.sendItems))
             self.exit = False
             return True

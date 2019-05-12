@@ -3,10 +3,11 @@ from r2s.utils import _print
 
 class Extension:
     def __init__(self,name,options, paginator = None, send_items_func = _print):
+        _print('init Extension' + name)
         self.name = name
         self.sendItems = send_items_func
         if paginator is None:    
-            self.paginator = Paginator(name,options)
+            self.paginator = Paginator(options = options,extension_name = name)
         else:
             self.paginator = paginator
         
