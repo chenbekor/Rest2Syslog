@@ -25,3 +25,4 @@ class Extension:
             else:
                 _print('Extension: ' + self.name + ' finished pagination.')
                 break
+        self.paginator.reset()
