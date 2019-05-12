@@ -18,10 +18,12 @@ class Paginator:
         if api_adaptor is not None:
             self.api_adaptor = api_adaptor
         else:
+            _print('about to load api adaptor for extension ' + self.extension_name)
             api_adaptor_class = self.loadClass(options,'api_adaptor')
             self.api_adaptor = api_adaptor_class(options)
 
     def loadClass(self,options,type_name):
+        _print('about to load ' + type_name + ' class...')
         module_name = options[self.extension_name + '.' + type_name + '_module']
         class_name = options[self.extension_name + '.' + type_name + '_class']
         _print('about to load from module:' + module_name)
@@ -31,6 +33,7 @@ class Paginator:
         return _class
 
     def loadFormatter(self,options):
+        _print('about to load formatter for extension ' + self.extension_name)
         formatter_class = self.loadClass(options,'formatter')
         formatter_class.options = options
         return formatter_class
