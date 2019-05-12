@@ -21,7 +21,7 @@ class State:
 
     def setLastItemId(self,last_item_id):
         if(last_item_id != ''):
-            _print('storing new last item id:' + last_item_id)
+            #_print('storing new last item id:' + last_item_id)
             self.last_item_id = last_item_id
             self.persist()
 
