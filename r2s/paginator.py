@@ -61,6 +61,7 @@ class Paginator:
             if item.getID() != self.state.last_item_id:
                 filtered_items.append(item)
             else:
+                _print('Found a matching record id: ' + self.state.last_item_id)
                 self.state.setLastItemId(self.current_item_id)
                 break
         if len(filtered_items) == 0:

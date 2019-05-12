@@ -44,7 +44,7 @@ class PCASBAlertsAPIAdaptor(R2SAPIAdaptor):
         headers = self.getAuthHeaders()
         request_body = self.buildRequestBody(page_num)
         response = requests.post(self.alerts_url,json = request_body, headers = headers)
-        _print('Fetch Page ' + str(page_num) + 'executed')
+        _print('Fetch Page ' + str(page_num) + ' executed')
         if response.status_code != 200:
             self.handleResponseError(response)
             return None

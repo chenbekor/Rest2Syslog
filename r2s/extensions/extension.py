@@ -17,7 +17,11 @@ class Extension:
         while self.paginator.next():
             page_items = self.paginator.fetchPageItems()
             if page_items is not None:
-                self.sendItems(page_items)
+                if len(page_items) > 0:
+                    self.sendItems(page_items)
+                    _print('Extension: ' + self.name + ' returned ' + str(len(page_items)) + ' new items.')
+                else
+                    _print('Extension: ' + self.name + ' finished pagination.')
             else:
-                _print('No new items for extension: ' + self.name)
+                _print('Extension: ' + self.name + ' finished pagination.')
                 break
