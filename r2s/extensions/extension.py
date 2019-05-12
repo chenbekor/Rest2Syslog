@@ -20,7 +20,7 @@ class Extension:
                 if len(page_items) > 0:
                     self.sendItems(page_items)
                     _print('Extension: ' + self.name + ' returned ' + str(len(page_items)) + ' new items.')
-                else
+                else:
                     _print('Extension: ' + self.name + ' finished pagination.')
             else:
                 _print('Extension: ' + self.name + ' finished pagination.')

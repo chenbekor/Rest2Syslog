@@ -13,7 +13,7 @@ class State:
                 if restored_state is not None:
                     _print('loaded from disk the following last record: ' + restored_state.last_item_id)
                     self.last_item_id = restored_state.last_item_id
-                else
+                else:
                     _print('restored state was empty.')
         except Exception as e:
             _print('No REST2Syslog State. Creating a new instance.'+ str(e))
