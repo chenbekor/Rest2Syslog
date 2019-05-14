@@ -2,7 +2,9 @@
   <img src="https://repository-images.githubusercontent.com/184577526/6d042f80-7056-11e9-9b2b-8e90c0ab0f40"/>
 </h1>
 
-Many products out there support ingestion of data via syslog. Some examples include: Kafka, Elasticsearch, Splunk, Redis, QRadar, the list goes on and on. If you seek to consume any REST API, fetch some items, parse into valid syslog messages and feed them into **any** Syslog destination this project is for you!
+If you seek to consume any REST API, fetch some items, parse into valid syslog messages and feed them into **any** Syslog destination this project is for you!
+
+Why syslog? Many products out there support ingestion of data via syslog. Some examples include: Kafka, Elasticsearch, Splunk, Redis, QRadar, the list goes on and on. If you want to integrate your product with other products, it is very likely that syslog is one of the viable integration interfaces. R2S will help you get the job done - all you need to do is extend to support your RESTful APIs. Read on for the full details.
 
 REST2Syslog collects data from any REST API parses the response, and sends it over to any configurable syslog destination. It is heavily based on [syslog-ng](https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.18/administration-guide/2#TOPIC-1043883) and implented as a [python source plugin](https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.18/administration-guide/23#TOPIC-1043966)
 
