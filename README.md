@@ -18,6 +18,7 @@ Feel free to submit pull requests or send any feedback/question.
 ## Installation
    - Install syslog-ng (=> 3.18)
    - Copy / Clone the r2s scripts
+   
    -- it is recommended to create a dedicated folder (called 'r2s') and git clone this project into it
    -- in case syslog-ng is started/stopped using systemctl you should append the root folder (eg - r2s) path to the PYTHONPATH environment variable like this:
    ```sh
