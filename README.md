@@ -72,14 +72,14 @@ Feel free to send any feedback/question. [just open an issue](https://github.com
             );
         };
         ```
-    - in addition to the above syslog-ng source, you should also add some destination. Here is an example destination to a remote syslog server. Any valid syslog-ng destination will do!
-      ```sh
-      destination d_tcp { syslog("10.10.0.1" transport("tcp") port(514) ); };
-      ```
-    - finally, wire the source and the destination in order to drive traffic (aka items) from the source into the destination.
-      ```sh
-      log {source(s_r2s); destination(d_tcp); };
-      ```
+      - in addition to the above syslog-ng source, you should also add some destination. Here is an example destination to a remote syslog server. Any valid syslog-ng destination will do!
+        ```sh
+        destination d_tcp { syslog("10.10.0.1" transport("tcp") port(514) ); };
+        ```
+      - finally, wire the source and the destination in order to drive traffic (aka items) from the source into the destination.
+        ```sh
+        log {source(s_r2s); destination(d_tcp); };
+        ```
 
 
 ## Architecture
