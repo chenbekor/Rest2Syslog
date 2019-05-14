@@ -105,6 +105,20 @@ The following table summarizes key components in the R2S system with a descripti
 <td>REST2SyslogSource</td>
 <td>This is the main class in r2s. It is implementing a syslog-ng Source (see syslog-ng documentation if you're not familiar with what is a Source). In turn, this component loads any pre-defined extensions as described in the syslog-ng.conf file under the key "extensions". Per each of the loaded Extensions, a call to <code>doWork</code> will occur every X seconds as defined in the Sleep "interval" parameter.</td>
 </tr>
+<tr>
+<td>Extension</td>
+<td>r2s can load multiple Extensions. each extension loads its own <code>Paginator</code> and calls its <code>fetchPageItems</code> until there are no more pages left (eg - max_pages reached) or no new items exist in the API response. Also - the extension will stop processing if the Service is halted for some reason.</td>
+</tr>
+<tr>
+<td>Paginator</td>
+<td>On bootstrap, this compoent will load an API Adaptor and a Formatter as configured in the r2s configuration parameters. The main method is <code>fetchPageItems</code> where the Paginator calls the API Adapator to fetch the next page, followed by a call to the Formatter in order to wrap each response item for message parsing and formatting (eg - LEEF / CEF format)</td>
+</tr>
+<td>API Adaptor</td>
+<td>The API Adaptor, implements the API calls. It handles authentication, and items fetching. the main method here is <code>fetchItems</code> which calls the REST API and extact the response payload. When extending R2S the formatter is one of the required extension components.</td>
+</tr>
+<td>Formatter</td>
+<td>wraps API specific entities and tranlate them into a well defined format. This component abstracts away the details of how to translate a specific response json scheme. When extending R2S the formatter is one of the required extension components.</td>
+</tr>
 </table>
 
 # Testing
