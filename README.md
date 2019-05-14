@@ -106,6 +106,7 @@ The following table summarizes key components in the R2S system with a descripti
 <td>This is the main class in r2s. It is implementing a syslog-ng Source (see syslog-ng documentation if you're not familiar with what is a Source). In turn, this component loads any pre-defined extensions as described in the syslog-ng.conf file under the key "extensions". Per each of the loaded Extensions, a call to doWork will occur once every X seconds as described in the Sleep interval - using the conf param "interval".</td>
 </tr>
 </table>
+
 # Testing
 Code coverage (from the projects's root directory):
 ```sh
