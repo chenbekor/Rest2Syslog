@@ -2,11 +2,16 @@
   <img src="https://repository-images.githubusercontent.com/184577526/6d042f80-7056-11e9-9b2b-8e90c0ab0f40"/>
 </h1>
 
+Many products out there support ingestion of data via syslog. Some examples include: Kafka, Elasticsearch, Splunk, Redis, QRadar, the list goes on and on. If you seek to consume some REST API, fetch some items via json parsing and feed those items into **any** Syslog destination this project is for you!
+
 REST2Syslog collects data from any REST API and sends it over to any configurable syslog destination.
 
-The initial implementation is based on a specific need I had to integate with the Proofpoint CASB platform. Any other REST API can be added. Some refactoring is required to support this (in the works).
+What does REST2Syslog (R2S) provides:
 
-Feel free to submit pull requests or send any feedback/question.
+
+The initial implementation includes a Proofpoint CASB platform extension. I'll be glad to accpet pull requests for additional extensions!
+
+Feel free to send any feedback/question. [just open an issue](/issues).
 
 # Deployment
 ## Dependencies
@@ -33,7 +38,7 @@ PYTHONPATH="/opt/syslog-ng/etc/r2s"
    -- Alternatively to a dedicated folder you can copy the python r2s scripts into sbin
    
    - Edit the syslog-ng configuration file (usually located at /etc/syslog-ng/syslog-ng.conf)
-   
+
    -- Add this syslog-ng source s_r2s. you should change the paramters (see parameters description below the following snippet)
 ```sh
 source s_r2s{
