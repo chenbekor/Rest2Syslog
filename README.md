@@ -11,7 +11,7 @@ What does REST2Syslog (R2S) provides:
 
 The initial implementation includes a Proofpoint CASB platform extension. I'll be glad to accpet pull requests for additional extensions!
 
-Feel free to send any feedback/question. [just open an issue](../issues).
+Feel free to send any feedback/question. [just open an issue](https://github.com/chenbekor/Rest2Syslog/issues).
 
 # Deployment
 ## Dependencies
