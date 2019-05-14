@@ -19,7 +19,7 @@ REST2Syslog (R2S) features:
 10. unit tested with >92% code coverage
 11. open sourced ;)
 
-The initial implementation includes a Proofpoint CASB Alerts extension. I'll be glad to accpet pull requests for additional extensions!
+The initial implementation includes a [Proofpoint CASB](https://www.proofpoint.com/au/products/cloud-app-security-broker) Alerts extension. I'll be glad to accpet pull requests for additional extensions!
 
 Feel free to send any feedback/question. [just open an issue](https://github.com/chenbekor/Rest2Syslog/issues).
 
