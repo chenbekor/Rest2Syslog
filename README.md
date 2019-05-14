@@ -89,11 +89,23 @@ Feel free to send any feedback/question. [just open an issue](https://github.com
 </h1>
 
 The following table summarizes key components in the R2S system with a description of what they do and how they interconnect with other components in the system:
-| Component Name  | Description |
-| ------------- | ------------- |
-| Syslog-ng client  | the main process running r2s is a syslog-ng client. Usually this process is setup as system service which is launched automatically on system startup. The syslog-ng client loads r2s if it is properly defined in the syslog-ng.conf file as described above. Once r2s is loaded, syslog-ng will call the 'run' method which is the entry point in r2s.   |
-| REST2SyslogSource  | This is the main class in r2s. It is implementing a syslog-ng Source (see syslog-ng documentation if you're not familiar with what is a Source). In turn, this component loads any pre-defined extensions as described in the syslog-ng.conf file under the key "extensions". Per each of the loaded Extensions, a call to doWork will occur once every X seconds as described in the Sleep interval - using the conf param "interval".  |
-
+<table>
+<thead>
+<tr>
+<th>Component Name</th><th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Syslog-ng client</td>
+<td>the main process running r2s is a syslog-ng client. Usually this process is setup as system service which is launched automatically on system startup. The syslog-ng client loads r2s if it is properly defined in the syslog-ng.conf file as described above. Once r2s is loaded, syslog-ng will call the 'run' method which is the entry point in r2s.
+</td>
+</tr>
+<tr>
+<td>REST2SyslogSource</td>
+<td>This is the main class in r2s. It is implementing a syslog-ng Source (see syslog-ng documentation if you're not familiar with what is a Source). In turn, this component loads any pre-defined extensions as described in the syslog-ng.conf file under the key "extensions". Per each of the loaded Extensions, a call to doWork will occur once every X seconds as described in the Sleep interval - using the conf param "interval".</td>
+</tr>
+</table>
 # Testing
 Code coverage (from the projects's root directory):
 ```sh
