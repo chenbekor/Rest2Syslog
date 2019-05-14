@@ -38,9 +38,9 @@ Feel free to send any feedback/question. [just open an issue](https://github.com
 
      - in case syslog-ng is started/stopped using systemctl you should append the root folder (eg - r2s) path to the PYTHONPATH environment variable like this:
         ```sh
-        PYTHONPATH="<path-to-your-python-file>
+        PYTHONPATH="<path-to-your-python-file>"
         ```
-      for example:
+        for example:
         ```sh
         PYTHONPATH="/opt/syslog-ng/etc/r2s"
         ```
