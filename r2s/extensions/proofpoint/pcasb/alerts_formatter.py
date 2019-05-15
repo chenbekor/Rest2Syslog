@@ -24,7 +24,7 @@ class PCASBAlertsFormatter(R2SItemFormatter):
             for (key,val) in leef_attributes.items(): leef_body += (key + '=' + val + '\t')
             return leef_body
         except Exception as ex:
-            _print(ex)
+            logger.error(ex)
             return ''
             
 
@@ -66,35 +66,35 @@ class PCASBAlertsFormatter(R2SItemFormatter):
         try:
             return self.item['related_events'][0]['user_email']
         except:
-            _print('could not extract user email from item id: ' + self.item['id'])
+            logger.error('could not extract user email from item id: ' + self.item['id'])
             return 'USER_NAME_EXTRACT_FAIL'
     
     def getCloudServiceName(self):
         try:
             return self.item['related_events'][0]['cloud_service']
         except:
-            _print('could not extract cloud service name from item ' + self.item['id'])
+            logger.error('could not extract cloud service name from item ' + self.item['id'])
             return 'CLOUD_SERVICE_EXTRACT_FAIL'
     
     def getClassification(self):
         try:
             return self.item['related_events'][0]['event_classification']['category']
         except:
-            _print("could not extract the related event's category from item " + self.item['id'])
+            logger.error("could not extract the related event's category from item " + self.item['id'])
             return 'CLASSIFICATION_EXTRACT_FAIL'
     
     def getSubClassification(self):
         try:
             return self.item['related_events'][0]['event_classification']['sub_category']
         except:
-            _print("could not extract the related event's sub category from item " + self.item['id'])
+            logger.error("could not extract the related event's sub category from item " + self.item['id'])
             return 'SUB_CLASSIFICATION_EXTRACT_FAIL'
 
     def getThreat(self):
         try:
             return self.item['related_events'][0]['event_classification']['threat']
         except:
-            _print("could not extract the related event's threat from item " + self.item['id'])
+            logger.error("could not extract the related event's threat from item " + self.item['id'])
             return 'THREAT_EXTRACT_FAIL'
     
     def buildMessage(self):

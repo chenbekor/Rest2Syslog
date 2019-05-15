@@ -16,12 +16,12 @@ class State:
                 else:
                     _print('restored state was empty.')
         except Exception as e:
-            _print('No REST2Syslog State. Creating a new instance.'+ str(e))
+            logger.error('No REST2Syslog State. Creating a new instance.'+ str(e))
             self.last_item_id = last_item_id
 
     def setLastItemId(self,last_item_id):
         if(last_item_id != ''):
-            #_print('storing new last item id:' + last_item_id)
+            logger.debug('storing new last item id:' + last_item_id)
             self.last_item_id = last_item_id
             self.persist()
 
@@ -30,7 +30,7 @@ class State:
             with open(self.persist_path, 'wb') as f:
                 pickle.dump(self, f)
         except Exception as e:
-            _print('Error while trying to store REST2Syslog State: ' + str(e))
+            logger.error('Error while trying to store REST2Syslog State: ' + str(e))
 
 
 
