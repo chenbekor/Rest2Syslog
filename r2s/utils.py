@@ -1,5 +1,6 @@
-import sys
+from syslogng import Logger
+
+logger = syslogng.Logger()
 
 def _print(msg):
-    print(msg)
-    sys.stdout.flush()
+    logger.info(msg)
