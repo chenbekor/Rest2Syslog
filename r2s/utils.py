@@ -1,4 +1,4 @@
-from syslogng import Logger
+import syslogng
 
 logger = syslogng.Logger()
 
