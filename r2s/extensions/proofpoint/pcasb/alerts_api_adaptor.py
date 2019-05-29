@@ -1,4 +1,4 @@
-from r2s.utils import _print
+from r2s.utils import _print,_print_error
 import requests
 from r2s.extensions.abstract import R2SAPIAdaptor
 
@@ -21,8 +21,8 @@ class PCASBAlertsAPIAdaptor(R2SAPIAdaptor):
         r = requests.post(self.auth_url,json=self.auth_body, headers=self.auth_headers)
         _print("Auth request executed")
         if r.status_code != 200 :
-            logger.error('Got non 200 response code: ' + str(r.status_code))
-            logger.error('Response body: ' + r.text)
+            _print_error('Got non 200 response code: ' + str(r.status_code))
+            _print_error('Response body: ' + r.text)
             r.raise_for_status()
         self.auth_token = r.json()['auth_token']
         _print('Access Token was refreshed successfully.')
@@ -37,8 +37,8 @@ class PCASBAlertsAPIAdaptor(R2SAPIAdaptor):
             _print('The Auth Token was probably expired.')
             self.auth_token = None
         else:
-            logger.error('Error Response code: ' + str(response.status_code))
-            logger.error('Error Response body: ' + response.text)
+            _print_error('Error Response code: ' + str(response.status_code))
+            _print_error('Error Response body: ' + response.text)
 
     def fetchItems(self, page_num):
         headers = self.getAuthHeaders()
@@ -52,6 +52,6 @@ class PCASBAlertsAPIAdaptor(R2SAPIAdaptor):
             else:
                 return response.json()['alerts']
         except Exception as ex:
-            logger.error('Error while trying to fetch items.')
-            logger.error(ex)
+            _print_error('Error while trying to fetch items.')
+            _print_error(ex)
             return None

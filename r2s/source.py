@@ -2,7 +2,7 @@ from syslogng import LogSource
 from syslogng import LogMessage
 import time
 from r2s.extensions.extension import Extension
-from r2s.utils import _print
+from r2s.utils import _print, _print_error
 
 class REST2SyslogSource(LogSource):
 
@@ -17,7 +17,7 @@ class REST2SyslogSource(LogSource):
             self.exit = False
             return True
         except:
-            logger.error('configuration of REST2Syslog Source (R2S) is incomplete or malformed. Please reffer to the R2S Wiki for more details.')
+            _print_error('configuration of REST2Syslog Source (R2S) is incomplete or malformed. Please reffer to the R2S Wiki for more details.')
             return False
 
     def request_exit(self): # mandatory
@@ -30,8 +30,8 @@ class REST2SyslogSource(LogSource):
                 time.sleep(self.interval)
                 self.doWork()
             except Exception as e:
-                logger.error('Error while trying to fetch alerts.')
-                logger.error(e)
+                _print_error('Error while trying to fetch alerts.')
+                _print_error(e)
 
     def sendItems(self,items):
         for item in items:            

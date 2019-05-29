@@ -1,4 +1,4 @@
-from r2s.utils import _print
+from r2s.utils import _print, _print_error, _print_debug
 from r2s.state import State
 
 class Paginator:
@@ -15,8 +15,8 @@ class Paginator:
             _print('about to load formatters')
             self.formatter = self.loadFormatter(options)
         except Exception as ex:
-            logger.error(ex)
-            logger.error('could not initialize Paginator.')
+            _print_error(ex)
+            _print_error('could not initialize Paginator.')
             raise
         if api_adaptor is not None:
             self.api_adaptor = api_adaptor
@@ -70,7 +70,7 @@ class Paginator:
             if item.getID() != self.state.last_item_id:
                 filtered_items.append(item)
             else:
-                logger.debug('Current Record ID: ' + item.getID() + ' matched last record id from state: ' + self.state.last_item_id )
+                _print_debug('Current Record ID: ' + item.getID() + ' matched last record id from state: ' + self.state.last_item_id )
                 self.state.setLastItemId(self.current_item_id)
                 self.is_end = True
                 break
@@ -87,7 +87,7 @@ class Paginator:
             try:
                 items = self.formatter.wrapItems(response_json)
             except Exception as ex:
-                logger.error(ex)
+                _print_error(ex)
                 items = None
             return self.filterItems(items)
         else:
