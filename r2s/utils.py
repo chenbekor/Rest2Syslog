@@ -1,12 +1,17 @@
-import syslogng
+import sys
+#import syslogng
 
-logger = syslogng.Logger()
+#logger = syslogng.Logger()
 
 def _print(msg):
-    logger.info(msg)
+    print(msg)
+    sys.stdout.flush() 
+#    logger.info(msg)
 
 def _print_error(msg):
-    logger.error(msg)
+    _print(msg)
+#    logger.error(msg)
 
 def _print_debug(msg):
-    logger.debug(msg)
+    _print(msg)
+#    logger.debug(msg)
