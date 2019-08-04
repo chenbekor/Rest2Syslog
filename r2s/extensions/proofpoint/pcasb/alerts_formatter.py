@@ -3,6 +3,7 @@ from r2s.extensions.abstract import R2SItemFormatter
 
 class PCASBAlertsFormatter(R2SItemFormatter):
     def __init__(self, item):
+        _print("About to initialize PCASBAlertsFormatter...")
         self.company_name = self.options['company_name']
         self.product_name = self.options['product_name']
         self.product_version = self.options['product_version']
