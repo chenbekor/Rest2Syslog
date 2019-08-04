@@ -1,5 +1,6 @@
 from r2s.utils import _print, _print_error, _print_debug
 from r2s.state import State
+import sys
 
 class Paginator:
     def __init__(self,options, state = None, api_adaptor = None, extension_name = 'extension_name'):
@@ -31,7 +32,11 @@ class Paginator:
         module_name = options[self.extension_name + '.' + type_name + '_module']
         class_name = options[self.extension_name + '.' + type_name + '_class']
         _print('about to load class {}.{}'.format(module_name,class_name))
-        module = __import__(module_name, fromlist =[class_name])
+        try:
+            module = __import__(module_name, fromlist =[class_name])
+        except:
+            _print('loading of class failed with reason: {}'.format(sys.exc_info()))
+            raise
         _print('class {}.{} imported!!'.format(module_name,class_name))
         _class = getattr(module, class_name)
         return _class
