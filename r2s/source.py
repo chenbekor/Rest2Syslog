@@ -3,11 +3,13 @@ from syslogng import LogMessage
 import time
 from r2s.extensions.extension import Extension
 from r2s.utils import _print, _print_error
+import sys
 
 class REST2SyslogSource(LogSource):
 
     def init(self, options): # optional
         _print("REST2Syslog Source init")
+        _print("running python version:{}.{}".format(sys.version_info[0],sys.version_info[1]))
         try:
             self.interval = int(options['interval'])
             self.extensions = []
