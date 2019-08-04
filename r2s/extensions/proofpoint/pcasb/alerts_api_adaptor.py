@@ -4,6 +4,7 @@ from r2s.extensions.abstract import R2SAPIAdaptor
 
 class PCASBAlertsAPIAdaptor(R2SAPIAdaptor):
     def __init__(self,options):
+        _print("About to initialize PCASBAlertsAPIAdaptor...")
         self.auth_url = options['auth_url']
         self.alerts_url = options['alerts_url']
         self.auth_headers = {'x-api-key':options['api_key'], 'Authorization':''}
