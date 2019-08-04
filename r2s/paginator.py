@@ -33,6 +33,7 @@ class Paginator:
         _print('about to load from module:' + module_name)
         _print('about to load class:' + class_name)
         module = __import__(module_name, fromlist =[class_name])
+        _print('module {}.{} imported!!'.format(module_name,class_name))
         _class = getattr(module, class_name)
         return _class
 
