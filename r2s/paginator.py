@@ -23,6 +23,7 @@ class Paginator:
         else:
             _print('about to load api adaptor for extension ' + self.extension_name)
             api_adaptor_class = self.loadClass(options,'api_adaptor')
+            _print('loaded api adaptor class!!')
             self.api_adaptor = api_adaptor_class(options)
 
     def loadClass(self,options,type_name):
