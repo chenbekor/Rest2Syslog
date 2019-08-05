@@ -39,7 +39,7 @@ class PCASBAlertsFormatter(R2SItemFormatter):
     
     def getDateTimeAsString(self):
         _t = self.item['timestamp']
-        #_print('about to parse this epoch: {}'.format(_t))
+        _print('about to parse this epoch: {}'.format(_t))
         return datetime.fromtimestamp(_t,timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f%z")
 
     
