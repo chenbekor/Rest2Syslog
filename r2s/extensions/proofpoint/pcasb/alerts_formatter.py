@@ -41,7 +41,7 @@ class PCASBAlertsFormatter(R2SItemFormatter):
         try:
             _t = self.item['timestamp']
             _print('about to parse this epoch: {}'.format(_t))
-            return datetime.fromtimestamp(_t,timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f%z")
+            return datetime.fromtimestamp(_t/1000.0,timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f%z")
         except Exception as e: 
             _print('Error occured while trying to parse DateTimeAsString:{}'.format(e))
             return 'N/A'
