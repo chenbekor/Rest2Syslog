@@ -1,5 +1,7 @@
 from r2s.utils import _print,_print_error
 from r2s.extensions.abstract import R2SItemFormatter
+from datetime import datetime
+from datetime import timezone
 
 class PCASBAlertsFormatter(R2SItemFormatter):
     def __init__(self, item):
@@ -34,6 +36,10 @@ class PCASBAlertsFormatter(R2SItemFormatter):
 
     def getTime(self):
         return str(self.item['timestamp'])
+    
+    def getDateTimeAsString(self):
+        _t = self.item['timestamp']
+        datetime.fromtimestamp(_t,timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f%z")
     
     def getTimeFormat(self):
         return 'Milliseconds'
@@ -117,6 +123,7 @@ class PCASBAlertsFormatter(R2SItemFormatter):
         leef_attributes['alertClassification'] = self.getClassification()
         leef_attributes['alertSubClassification'] = self.getSubClassification()
         leef_attributes['threat'] = self.getThreat()
+        leef_attributes['dateTimeString'] = self.getDateTimeAsString()
 
         leef_body = self.buildBody(leef_attributes)
         
