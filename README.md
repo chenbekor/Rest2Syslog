@@ -37,20 +37,19 @@ Feel free to send any feedback/question. [just open an issue](https://github.com
    - Install syslog-ng (=> 3.18)
    - Copy / Clone the r2s scripts
 
-     - it is recommended to create a dedicated folder (called 'r2s') and git clone this project into it
+     - git clone this project into a local folder
 
      - in case syslog-ng is started/stopped using systemctl you should append the root folder (eg - r2s) path to the PYTHONPATH environment variable like this:
         ```sh
-        PYTHONPATH="<path-to-your-python-file>"
+        PYTHONPATH="<full-path-to-your-python-file>"
         ```
         for example:
         ```sh
-        PYTHONPATH="/opt/syslog-ng/etc/r2s"
+        PYTHONPATH="/opt/sysconfig/syslog-ng/Rest2Syslog/"
         ```
-
         For recent Red Hat Enterprise Linux, Fedora, and CentOS distributions that use systemd, the systemctl command sources the /etc/sysconfig/syslog-ng file before starting syslog-ng OSE. (On openSUSE and SLES, /etc/sysconfig/syslog file.) Append the following line to the end of this file: 
         ```sh
-        PYTHONPATH="/opt/syslog-ng/etc/r2s"
+        PYTHONPATH="<full-path-to-your-python-file>"
         ```
 
       - Alternatively to a dedicated folder you can copy the python r2s scripts into sbin
