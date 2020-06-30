@@ -2,11 +2,13 @@
   <img src="https://repository-images.githubusercontent.com/184577526/6d042f80-7056-11e9-9b2b-8e90c0ab0f40"/>
 </h1>
 
-If you seek to consume any REST API, fetch some items, parse into valid syslog messages and feed them into **any** Syslog destination this project is for you!
+If you seek to consume any REST API, fetch some items/events/messages, format them into valid syslog messages and feed them into **any** Syslog destination Rest2Syslog (R2S) is a perfect choice!
 
-Why syslog? Many products out there support ingestion of data via syslog. Some examples include: Kafka, Elasticsearch, Splunk, Redis, QRadar, the list goes on and on. If you want to integrate your product with other products, it is very likely that syslog is one of the viable integration interfaces. R2S will help you get the job done - all you need to do is extend to support your RESTful APIs. Read on for the full details.
+Why syslog? Many products/platforms out there support ingestion of data (inbound messages) using the syslog standard for messages. Some product examples include: Kafka, Elasticsearch, Splunk, Redis, QRadar, the list goes on and on. If you want to send messages from your Platform's REST API (eg Message Source) into other products (eg Message Destination), it is very likely that syslog is a viable protocol. R2S will help you get the job done faster - all you need to do is extend R2S to support your specific RESTful APIs. Read on for the full details on how to extend R2S.
 
-REST2Syslog collects data from any REST API parses the response, and sends it over to any configurable syslog destination. It is heavily based on [syslog-ng](https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.18/administration-guide/2#TOPIC-1043883) and implented as a [python source plugin](https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.18/administration-guide/23#TOPIC-1043966)
+Why R2S on top of syslog-ng? syslog-ng is a free and open-source implementation of the syslog protocol for Unix and Unix-like systems. It extends the original syslogd model with content-based filtering, rich filtering capabilities, flexible configuration options and adds important features to syslog, like using TCP for transport. More over, syslog-ng is extensible by design and allows writing custom sources and destinations. This allows us to implement REST2Syslog as a custom source.
+
+REST2Syslog collects data from any REST API extract relevant fields, formats syslog messages, and sends them over to any configurable syslog destination. It is heavily based on [syslog-ng](https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.18/administration-guide/2#TOPIC-1043883) and implented as a [python source plugin](https://www.syslog-ng.com/technical-documents/doc/syslog-ng-open-source-edition/3.18/administration-guide/23#TOPIC-1043966)
 
 REST2Syslog (R2S) features:
 1. Execute your API calls periodically using a configurable interval parameter
@@ -16,10 +18,9 @@ REST2Syslog (R2S) features:
 5. Parses response into individual items
 6. Transform your Items into standard message formats such as IBM QRadar [LEEF](https://www.ibm.com/developerworks/community/wikis/form/anonymous/api/wiki/9989d3d7-02c1-444e-92be-576b33d2f2be/page/3dc63f46-4a33-4e0b-98bf-4e55b74e556b/attachment/a19b9122-5940-4c89-ba3e-4b4fc25e2328/media/QRadar_LEEF_Format_Guide.pdf) or HP ArcSight [CEF](https://community.microfocus.com/dcvta86296/attachments/dcvta86296/connector-documentation/1197/2/CommonEventFormatV25.pdf)
 7. handles errors gracefully
-8. handles sending messages
+8. handles sending messages as syslog messages
 9. extensions API - built in extensability (read here how - TBD)
 10. unit tested with >92% code coverage
-11. open sourced ;)
 
 The initial implementation includes a [Proofpoint CASB](https://www.proofpoint.com/au/products/cloud-app-security-broker) Alerts extension. I'll be glad to accpet pull requests for additional extensions!
 
