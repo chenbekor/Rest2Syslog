@@ -48,6 +48,8 @@ Feel free to send any feedback/question. [just open an issue](https://github.com
         PYTHONPATH="/opt/syslog-ng/etc/r2s"
         ```
 
+        For recent Red Hat Enterprise Linux, Fedora, and CentOS distributions that use systemd, the systemctl command sources the /etc/sysconfig/syslog-ng file before starting syslog-ng OSE. (On openSUSE and SLES, /etc/sysconfig/syslog file.) Append the following line to the end of this file: PYTHONPATH="<path-to-your-python-file>"
+
       - Alternatively to a dedicated folder you can copy the python r2s scripts into sbin
    
    - Edit the syslog-ng configuration file (usually located at /etc/syslog-ng/syslog-ng.conf)
