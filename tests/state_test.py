@@ -1,33 +1,33 @@
 from r2s.state import State
-from r2s.paginator import Paginator
+from r2s.extensions.proofpoint.pcasb.alerts_paginator import PCASBAlertsPaginator as Paginator
 
 from infra.data import *
 from infra.api_mock import *
 from infra.utils import *
 
 def  test_persist():
-    state = State(last_item_id='4')
+    state = State(value='4')
     state.persist() #store ro disk
 
     restored_state = State() #loads from disk
-    assert restored_state.last_item_id == '4'
+    assert restored_state.value == '4'
 
-    restored_state.setLastItemId('6') #also persist
+    restored_state.setValue('6') #also persist
 
     restored_second_state = State() #loads from disk
 
-    assert restored_second_state.last_item_id == '6'
+    assert restored_second_state.value == '6'
 
 def test_persist_invalid_path():
-    state = State(last_item_id='4',persit_path='/invalid_path/mock.obj')
+    state = State(value='4',persist_path='/invalid_path/')
     state.persist() #should persist to disk but fails due to bad path
 
-    restored_state = State() #loads from disk
-    assert restored_state.last_item_id == ''  #value lost - due to invalid persist path
+    restored_state = State(persist_path='/invalid_path/') #loads from disk
+    assert restored_state.value == ''  #value lost - due to invalid persist path
 
 def test_state_based_pagination():
-    state = State()
-    assert state.last_item_id == ''
+    state = State(value=0)
+    assert state.value == 0
 
     mocker = api_mock([first_page])
     paginator = Paginator(options = options, api_adaptor= mocker, state = state)

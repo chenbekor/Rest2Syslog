@@ -1,4 +1,4 @@
-from r2s.paginator import Paginator
+from r2s.extensions.proofpoint.pcasb.alerts_paginator import PCASBAlertsPaginator as Paginator
 from r2s.state import State, DEFAULT_PERSIST_PATH
 from infra.data import *
 from infra.api_mock import * 
@@ -23,7 +23,7 @@ def test_single_page():
 
 
 def test_no_new_items():
-    paginator = Paginator(options = options, api_adaptor = api_mock([first_page]), state = State(last_item_id='1'))
+    paginator = Paginator(options = options, api_adaptor = api_mock([first_page]), state = State(value='1'))
     paginator.next()
     assert unwrap(paginator.fetchPageItems()) == None
     
@@ -31,7 +31,7 @@ def test_no_new_items():
     assert unwrap(paginator.fetchPageItems()) == None
 
 def test_one_item():
-    paginator = Paginator(options = options, api_adaptor = api_mock([first_page]), state = State(last_item_id='2'))
+    paginator = Paginator(options = options, api_adaptor = api_mock([first_page]), state = State(value='2'))
     paginator.next()
     assert unwrap(paginator.fetchPageItems()) == [{'id':'1'}]
 
@@ -56,7 +56,7 @@ def test_two_pages():
     assert items == None    
 
 def test_4_items():
-    paginator = Paginator(options = options, api_adaptor= api_mock(two_pages), state = State(last_item_id='5'))
+    paginator = Paginator(options = options, api_adaptor= api_mock(two_pages), state = State(value='5'))
     
     paginator.next()
     items = unwrap(paginator.fetchPageItems())
@@ -72,13 +72,13 @@ def test_4_items():
 
 
 def test_negative_max_pages():
-    paginator = Paginator(options = {**options,**options_negative_max_page}, api_adaptor= api_mock(two_pages), state = State(last_item_id='5'))
+    paginator = Paginator(options = {**options,**options_negative_max_page}, api_adaptor= api_mock(two_pages), state = State(value='5'))
     
     is_available = paginator.next()
     assert is_available == False
 
 def test_max_pages():
-    paginator = Paginator(options = {**options,**options_two_page}, api_adaptor= api_mock(three_pages), state = State(last_item_id='100'))
+    paginator = Paginator(options = {**options,**options_two_page}, api_adaptor= api_mock(three_pages), state = State(value='100'))
     
     paginator.next()
     items = unwrap(paginator.fetchPageItems())
