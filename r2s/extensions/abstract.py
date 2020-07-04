@@ -46,6 +46,35 @@ class R2SItemFormatter(ABC):
 
 
 class R2SAPIPaginator(ABC):
+    def __init__(self, options, state = None, api_adaptor = None, extension_name = 'extension_name'):
+        _print('initializing {} Paginator'.format(extension_name))
+        if(state is None):
+            self.state = State(file_prefix=extension_name)
+        else:
+            _print_debug('initializing state with value: {}'.format(state.value))
+            self.state = state
+        self.extension_name = extension_name
+        self.next_page_token = -1
+        self.is_end = False
+        self.reset()
+        try:
+            self.max_pages = int(options['max_pages'])
+            _print_debug('about to load formatters')
+            self.formatter = R2SItemFormatter.loadFormatterClass(
+                formatter_class_prefix = self.extension_name,
+                options = options)
+        except Exception as ex:
+            _print_error(ex)
+            _print_error('could not initialize {} Paginator.'.format(extension_name))
+            raise
+        if api_adaptor is not None:
+            self.api_adaptor = api_adaptor
+        else:
+            _print_debug('about to load api adaptor for extension ' + self.extension_name)
+            type_name = 'api_adaptor'
+            api_adaptor_class = _loadClass(options, extension_name,type_name)
+            _print('loaded api adaptor class!!')
+            self.api_adaptor = api_adaptor_class(options)    
 
     @abstractmethod
     def reset(self):

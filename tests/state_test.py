@@ -94,4 +94,4 @@ def test_pagination_after_service_restart():
 
     paginator.next()
     items = unwrap(paginator.fetchPageItems())
-    assert items == None    
+    assert items == None
