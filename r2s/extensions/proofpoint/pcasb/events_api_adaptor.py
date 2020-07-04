@@ -30,7 +30,7 @@ class PCASBEventsAPIAdaptor(R2SAPIAdaptor):
         self.auth_headers['Authorization'] = self.auth_token
 
     def buildRequestURL(self, next_page_token):
-        return self.events_url + "nextPage=" + next_page_token
+        return '{}nextPage={}'.format(self.events_url,next_page_token)
 
     def handleResponseError(self,response):
         _print('Got non 200 response code')

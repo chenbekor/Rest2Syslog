@@ -1,4 +1,4 @@
-from r2s.utils import _print,_print_error
+from r2s.utils import _print,_print_debug,_print_error
 from r2s.extensions.abstract import R2SItemFormatter
 from datetime import datetime
 from datetime import timezone
@@ -15,16 +15,23 @@ class PCASBEventsFormatter(R2SItemFormatter):
     def wrapItems(items_as_json_array):
         formatters = []
         for item in items_as_json_array:
+            _print_debug('about to wrap this item: {}'.format(item))
             formatters.append(PCASBEventsFormatter(item))
-        return formatters
+        if len(formatters) > 0:
+            return formatters
+        else:
+            return None
+
+    def getID(self):
+        return self.item['eventId']
 
     def buildHeader(self):
-        return 'LEEF:1.0|' + self.company_name + '|' + self.product_name + '|' + self.product_version + '|' + self.item['type'] + '|'
+        return 'LEEF:1.0|' + self.company_name + '|' + self.product_name + '|' + self.product_version + '|' + self.getID() + '|'
     
     def buildBody(self, leef_attributes):
         try:
             leef_body = ''
-            for (key,val) in leef_attributes.items(): leef_body += (key + '=' + val + '\t')
+            for (key,val) in leef_attributes.items(): leef_body += (key + '=' + str(val) + '\t')
             return leef_body
         except Exception as ex:
             _print_error(ex)
@@ -47,6 +54,7 @@ class PCASBEventsFormatter(R2SItemFormatter):
         return 'Milliseconds'
 
     def extractAttribute(self, attr_name):
+        _print_debug('about to extract attribute name {} from item: {}'.format(attr_name, self.item))
         try:
             return self.item[attr_name]
         except:
@@ -75,10 +83,14 @@ class PCASBEventsFormatter(R2SItemFormatter):
         leef_attributes['userAgent'] = self.extractAttribute('userAgent')
         leef_attributes['systemEvent'] = self.extractAttribute('systemEvent')
         
-
-        for (key,val) in self.item['additionalProperties']: leef_attributes['ext.' + key] = val
+        try:
+            for ex_prop in self.item['additionalProperties']: 
+                leef_attributes['ext.{}'.format(ex_prop['key'])] = str(ex_prop['value'])
+        except Exception as e: 
+            _print_error('could not extract additional props from event due to error: {}'.format(e))
 
         leef_body = self.buildBody(leef_attributes)
         
         leef_msg = leef_header + leef_body
+        _print_debug('the leef msg is: {}'.format(leef_msg))
         return leef_msg

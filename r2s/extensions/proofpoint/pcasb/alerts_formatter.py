@@ -16,7 +16,10 @@ class PCASBAlertsFormatter(R2SItemFormatter):
         formatters = []
         for item in items_as_json_array:
             formatters.append(PCASBAlertsFormatter(item))
-        return formatters
+        if len(formatters) > 0:
+            return formatters
+        else:
+            return None
 
     def buildHeader(self):
         return 'LEEF:1.0|' + self.company_name + '|' + self.product_name + '|' + self.product_version + '|' + self.item['type'] + '|'
