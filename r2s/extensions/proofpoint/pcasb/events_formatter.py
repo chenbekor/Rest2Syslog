@@ -5,7 +5,7 @@ from datetime import timezone
 
 class PCASBEventsFormatter(R2SItemFormatter):
     def __init__(self, item):
-        _print("About to initialize PCASBEventsFormatter...")
+        _print_debug("About to initialize PCASBEventsFormatter...")
         self.company_name = self.options['company_name']
         self.product_name = self.options['product_name']
         self.product_version = self.options['product_version']

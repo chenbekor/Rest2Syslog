@@ -1,11 +1,11 @@
-from r2s.utils import _print,_print_error
+from r2s.utils import _print, _print_debug,_print_error
 from r2s.extensions.abstract import R2SItemFormatter
 from datetime import datetime
 from datetime import timezone
 
 class PCASBAlertsFormatter(R2SItemFormatter):
     def __init__(self, item):
-        _print("About to initialize PCASBAlertsFormatter...")
+        _print_debug("About to initialize PCASBAlertsFormatter...")
         self.company_name = self.options['company_name']
         self.product_name = self.options['product_name']
         self.product_version = self.options['product_version']
