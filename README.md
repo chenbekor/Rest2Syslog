@@ -19,7 +19,7 @@ REST2Syslog (R2S) features:
 6. Transform your Items into standard message formats such as IBM QRadar [LEEF](https://www.ibm.com/developerworks/community/wikis/form/anonymous/api/wiki/9989d3d7-02c1-444e-92be-576b33d2f2be/page/3dc63f46-4a33-4e0b-98bf-4e55b74e556b/attachment/a19b9122-5940-4c89-ba3e-4b4fc25e2328/media/QRadar_LEEF_Format_Guide.pdf) or HP ArcSight [CEF](https://community.microfocus.com/dcvta86296/attachments/dcvta86296/connector-documentation/1197/2/CommonEventFormatV25.pdf)
 7. handles errors gracefully
 8. handles sending messages as syslog messages
-9. extensions API - built in extensability (read here how - TBD)
+9. extensions API - write your own custom extensions (read below for details)
 10. unit tested with >92% code coverage
 
 The initial implementation includes a [Proofpoint CASB](https://www.proofpoint.com/au/products/cloud-app-security-broker) Alerts extension plus an Events extension. Those extensions will pull alerts/events from the Proofpoint CASB platform and stream those items into any valid syslog-ng destination. 
