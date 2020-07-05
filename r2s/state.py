@@ -18,7 +18,7 @@ class State:
                 with open(self.full_path, 'rb') as f:
                     restored_state = pickle.load(f)
                     if restored_state is not None:
-                        _print('loaded from disk the following last record: ' + restored_state.value)
+                        _print('loaded from disk the following last value: ' + restored_state.value)
                         self.value = restored_state.value
                     else:
                         _print('restored state was empty.')
@@ -28,7 +28,7 @@ class State:
 
     def setValue(self,value):
         if(value != ''):
-            _print_debug('persisting new value:' + value)
+            _print('persisting new value:' + value)
             self.value = value
             self.persist()
 
