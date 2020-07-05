@@ -54,7 +54,7 @@ class R2SAPIPaginator(ABC):
             self.state = state
         _print('initialized state for {} with value: {}'.format(extension_name,self.state.value))            
         self.extension_name = extension_name
-        self.next_page_token = state.value
+        self.next_page_token = self.state.value
         _print('paginator {} next page token is: {}'.format(extension_name,self.next_page_token))
         self.is_end = False
         self.reset()
