@@ -1,4 +1,4 @@
-from r2s.utils import _print,_print_error
+from r2s.utils import _print, _print_debug, _print_error
 import requests
 from r2s.extensions.abstract import R2SAPIAdaptor
 from datetime import date, timedelta
@@ -34,12 +34,12 @@ class PCASBEventsAPIAdaptor(R2SAPIAdaptor):
         if not next_page_token:
             dt = date.today() - timedelta(1)
             url = '{}startTime={}T00:00'.format(self.events_url,dt)
-            _print('empty next_page_token, fetching all events since {} using this URL: {}'.format(dt, url))
-            return url            
+            _print_debug('empty next_page_token, fetching all events since {}'.format(dt))      
         else:
             url = '{}nextPage={}'.format(self.events_url,next_page_token)
-            _print('next_page_token non empty, fetching all events using this URL: {}'.format(url))
-            return url
+            
+        _print('fetching page: {}'.format(url))
+        return url
 
 
     def handleResponseError(self,response):
