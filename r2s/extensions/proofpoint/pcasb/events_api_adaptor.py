@@ -1,6 +1,7 @@
 from r2s.utils import _print,_print_error
 import requests
 from r2s.extensions.abstract import R2SAPIAdaptor
+from datetime import date, timedelta
 
 class PCASBEventsAPIAdaptor(R2SAPIAdaptor):
     def __init__(self,options):
@@ -30,7 +31,14 @@ class PCASBEventsAPIAdaptor(R2SAPIAdaptor):
         self.auth_headers['Authorization'] = self.auth_token
 
     def buildRequestURL(self, next_page_token):
-        return '{}nextPage={}'.format(self.events_url,next_page_token)
+        if not next_page_token:
+            return '{}nextPage={}'.format(self.events_url,next_page_token)
+        else:
+            dt = date.today() - timedelta(1)
+            url = '{}startTime={}'.format(self.events_url,dt)
+            _print('empty next_page_token, fetching all events since {} using this URL: {}'.format(dt, url))
+            return url
+
 
     def handleResponseError(self,response):
         _print('Got non 200 response code')
