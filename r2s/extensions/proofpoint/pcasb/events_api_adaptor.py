@@ -37,7 +37,7 @@ class PCASBEventsAPIAdaptor(R2SAPIAdaptor):
             return url
         else:
             dt = date.today() - timedelta(1)
-            url = '{}startTime={}'.format(self.events_url,dt)
+            url = '{}startTime={}T00:00'.format(self.events_url,dt)
             _print('empty next_page_token, fetching all events since {} using this URL: {}'.format(dt, url))
             return url
 
