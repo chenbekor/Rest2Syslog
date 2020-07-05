@@ -16,7 +16,7 @@ class PCASBEventsPaginator(R2SAPIPaginator):
         self.is_end = False
 
     def next(self):
-        _print('next page token for {} = {}'.format(self.extension_name,self.next_page_token))
+        _print_debug('next page token for {} = {}'.format(self.extension_name,self.next_page_token))
         return self.page_size != 0
     
     def fetchPageItems(self):
