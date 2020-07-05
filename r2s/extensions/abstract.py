@@ -51,11 +51,11 @@ class R2SAPIPaginator(ABC):
         if(state is None):
             self.state = State(file_prefix=extension_name)
         else:
-            _print('initializing state for {} with value: {}'.format(extension_name,state.value))
             self.state = state
+        _print('initialized state for {} with value: {}'.format(extension_name,self.state.value))            
         self.extension_name = extension_name
         self.next_page_token = state.value
-        _print('paginator {} next page token is: {}'.format(extension_name,state.value))
+        _print('paginator {} next page token is: {}'.format(extension_name,self.next_page_token))
         self.is_end = False
         self.reset()
         try:
