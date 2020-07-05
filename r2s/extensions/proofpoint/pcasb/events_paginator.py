@@ -12,7 +12,6 @@ class PCASBEventsPaginator(R2SAPIPaginator):
         try:
             self.state.setValue(self.next_page_token)
         except: pass
-        self.next_page_token = ""
         self.page_size = -1
         self.is_end = False
 
