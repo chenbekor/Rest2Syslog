@@ -32,7 +32,9 @@ class PCASBEventsAPIAdaptor(R2SAPIAdaptor):
 
     def buildRequestURL(self, next_page_token):
         if not next_page_token:
-            return '{}nextPage={}'.format(self.events_url,next_page_token)
+            url = '{}nextPage={}'.format(self.events_url,next_page_token)
+            _print('next_page_token non empty, fetching all events using this URL: {}'.format(url))
+            return url
         else:
             dt = date.today() - timedelta(1)
             url = '{}startTime={}'.format(self.events_url,dt)
