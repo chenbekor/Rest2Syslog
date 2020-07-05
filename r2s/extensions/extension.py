@@ -7,7 +7,7 @@ class Extension:
         self.sendItems = send_items_func
         if paginator is None:
             _print('about to load paginator for extension ' + name)
-            paginator_class = _loadClass(options, name,'paginator')
+            paginator_class = _loadClass(options, name,'api_paginator')
             self.paginator = paginator_class(options = options, extension_name = name)
         else:
             self.paginator = paginator
