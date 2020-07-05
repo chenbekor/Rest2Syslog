@@ -28,7 +28,7 @@ class State:
 
     def setValue(self,value):
         if(value != ''):
-            _print('persisting new value:' + value)
+            _print_debug('persisting new value:' + value)
             self.value = value
             self.persist()
 
