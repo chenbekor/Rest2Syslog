@@ -13,8 +13,8 @@ def _print_error(msg):
 #    logger.error(msg)
 
 def _print_debug(msg):
-    #return
-    _print(msg)
+    return
+    #_print(msg)
     # #logger.debug(msg)
 
 def _loadClass(options,class_prefix, type_name):
