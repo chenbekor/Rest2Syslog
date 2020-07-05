@@ -26,7 +26,7 @@ class PCASBAlertsPaginator(R2SAPIPaginator):
         if self.isNextAvailable():
             _print_debug("is next available!!")
             self.next_page_token += 1
-            _print('next page token = {}'.format(self.next_page_token))
+            _print('next page token for {} = {}'.format(self.extension_name,self.next_page_token))
             return True
         else:
             return False
