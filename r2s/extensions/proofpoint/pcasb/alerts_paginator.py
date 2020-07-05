@@ -22,9 +22,9 @@ class PCASBAlertsPaginator(R2SAPIPaginator):
         return  is_not_reached_end and is_not_maxed
 
     def next(self):
-        _print("inside next!!")
+        _print_debug("inside next!!")
         if self.isNextAvailable():
-            _print("is next available!!")
+            _print_debug("is next available!!")
             self.next_page_token += 1
             _print('next page token = {}'.format(self.next_page_token))
             return True
