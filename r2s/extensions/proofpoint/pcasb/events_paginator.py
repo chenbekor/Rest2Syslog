@@ -24,9 +24,9 @@ class PCASBEventsPaginator(R2SAPIPaginator):
         if response_json is not None:
             try:
                 events = response_json['content']
-                _print_debug('got these events:{}'.format(events))
                 self.next_page_token = response_json['nextPageToken']
                 self.page_size = int(response_json['size'])
+                _print('got {} events.'.format(self.page_size))
                 if self.page_size is 0:
                     return None
                 else:
